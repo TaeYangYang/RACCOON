@@ -1,8 +1,8 @@
 plugins {
-    id 'groovy'
-    id 'java'
-    id 'org.springframework.boot' version '2.4.3'
-    id ('io.spring.dependency-management') version('1.0.11.RELEASE')
+  id 'groovy'
+  id 'java'
+  id 'org.springframework.boot' version '2.4.3'
+  id('io.spring.dependency-management') version('1.0.11.RELEASE')
 }
 
 group = 'com.mycom'
@@ -10,18 +10,24 @@ version = '1.0-SNAPSHOT'
 sourceCompatibility = "11"
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-devtools'
+  implementation 'org.springframework.boot:spring-boot-starter'
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.springframework.boot:spring-boot-devtools'
 
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+  //코드 자동 리로드
+  implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.3.12.RELEASE'
+
+  //thymeleaf layout
+  implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
-    useJUnitPlatform()
+  useJUnitPlatform()
 }
