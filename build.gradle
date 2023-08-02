@@ -14,18 +14,27 @@ repositories {
 }
 
 dependencies {
+  //spring boot
   implementation 'org.springframework.boot:spring-boot-starter'
   implementation 'org.springframework.boot:spring-boot-starter-web'
   implementation 'org.springframework.boot:spring-boot-devtools'
 
+  //thymeleaf
   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
-  //코드 자동 리로드
+  //auto reload
   implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.3.12.RELEASE'
 
   //thymeleaf layout
   implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+  // AOP
+  implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
+
+  //HIBERNATE
+  //implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  //implementation 'mysql:mysql-connector-java'
 }
 
 test {
