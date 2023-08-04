@@ -17,7 +17,7 @@ dependencies {
   //spring boot
   implementation 'org.springframework.boot:spring-boot-starter'
   implementation 'org.springframework.boot:spring-boot-starter-web'
-  implementation 'org.springframework.boot:spring-boot-devtools'
+  compileOnly 'org.springframework.boot:spring-boot-devtools'
 
   //thymeleaf
   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -29,12 +29,18 @@ dependencies {
   implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+  // lombok
+  implementation 'org.projectlombok:lombok'
+
   // AOP
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
 
-  //HIBERNATE
-  //implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-  //implementation 'mysql:mysql-connector-java'
+  // jdbc
+  implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.3.12.RELEASE'
+  // ojdbc
+  implementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '21.1.0.0'
+  // JPA
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
 
 test {
