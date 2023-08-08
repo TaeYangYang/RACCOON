@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = "user")
 public class UserController {
 
-  @GetMapping("selectReg")
+  @GetMapping("signUpList")
   public String selectReg(HttpServletRequest request, HttpServletResponse response, ModelMap model){
-    return "user/selectReg";
+    return "user/signUpList";
   }
 
   /**

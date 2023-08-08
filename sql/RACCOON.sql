@@ -1,3 +1,4 @@
+--RACCOON 스키마
 CREATE TABLE USER_TB
 (
     USER_ID     VARCHAR2(30 BYTE),
@@ -41,10 +42,3 @@ CREATE TABLE VISIT_TB(
 	USER_IP VARCHAR2(30)
 )
 ;
-
------------------------------------------태양!!!
-
-
-
-
-//
