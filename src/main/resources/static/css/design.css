@@ -28,3 +28,12 @@
     display: none;
   }
 }
+
+.footer span {
+  display: block;
+}
+
+.footer span .logo {
+  height: 50px;
+  padding-bottom: 5px;
+}
