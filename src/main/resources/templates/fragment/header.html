@@ -2,6 +2,12 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" th:fragment="headerFragment">
 <head>
   <meta charset="UTF-8">
+
+  <script>
+    function signUp(){
+      location.href = '/user/signUp';
+    }
+  </script>
 </head>
 <body>
 <!--header-->
@@ -23,7 +29,7 @@
 
       <div class="col-md-3 text-end">
         <button type="button" class="btn btn-outline-primary me-2">Login</button>
-        <button type="button" class="btn btn-primary">Sign-up</button>
+        <button type="button" class="btn btn-primary" onclick="signUp();">Sign-up</button>
       </div>
     </header>
   </div>

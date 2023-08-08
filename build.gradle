@@ -29,18 +29,24 @@ dependencies {
   implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-  // lombok
+  //annotationProcessor
+  annotationProcessor 'org.projectlombok:lombok'
+
+  //lombok
   implementation 'org.projectlombok:lombok'
 
-  // AOP
+  //AOP
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
 
-  // jdbc
+  //jdbc
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.3.12.RELEASE'
-  // ojdbc
+  //ojdbc
   implementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '21.1.0.0'
-  // JPA
+  //JPA
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+  //SMS
+  implementation 'net.nurigo:sdk:4.3.0'
 }
 
 test {
