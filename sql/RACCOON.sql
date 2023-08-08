@@ -41,3 +41,10 @@ CREATE TABLE VISIT_TB(
 	USER_IP VARCHAR2(30)
 )
 ;
+
+
+
+
+
+
+//
