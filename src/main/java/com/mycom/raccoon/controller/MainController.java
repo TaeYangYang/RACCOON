@@ -13,6 +13,6 @@ public class MainController {
   @GetMapping("/")
   public String index(HttpServletRequest request, HttpServletResponse response, Model model) {
     model.addAttribute("id", "user");
-    return "main";
+    return "index";
   }
 }

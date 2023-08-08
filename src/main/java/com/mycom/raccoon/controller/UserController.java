@@ -19,6 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = "user")
 public class UserController {
 
+  @GetMapping("selectReg")
+  public String selectReg(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    return "user/selectReg";
+  }
+
   /**
    * 회원가입 페이지 진입
    * @param userinfo
@@ -28,7 +33,7 @@ public class UserController {
    * @return String view
    */
   @GetMapping("signUp")
-  public String index(Userinfo userinfo, HttpServletRequest request, HttpServletResponse response, Model model) {
+  public String signUp(Userinfo userinfo, HttpServletRequest request, HttpServletResponse response, Model model) {
     model.addAttribute("userinfo", userinfo);
     return "user/signUp";
   }
