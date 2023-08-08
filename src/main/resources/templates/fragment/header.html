@@ -2,7 +2,6 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" th:fragment="headerFragment">
 <head>
   <meta charset="UTF-8">
-
   <script>
     function signUp(){
       location.href = '/user/signUpList';
@@ -15,7 +14,9 @@
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
       <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
 <!--        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">-->
-          <img src="/img/common/logo/main_logo.png" style="height: 100px;">
+          <img class="logo" id="logo_default" src="/img/common/logo/Raccoon_default.png">
+          <img class="logo" id="logo_vertical" src="/img/common/logo/Raccoon_vertical.png">
+          <img class="logo" id="logo_org" src="/img/common/logo/Raccoon_org.png">
 <!--        </svg>-->
       </a>
 

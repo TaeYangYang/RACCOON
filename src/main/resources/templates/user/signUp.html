@@ -6,11 +6,6 @@
  <title>RACCOON</title>
 </head>
 <body>
-<a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-  <!--        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">-->
-  <img src="/img/common/logo/main_logo.png" style="height: 100px;">
-  <!--        </svg>-->
-</a>
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -19,7 +14,11 @@
           <div class="card-body p-md-5">
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-
+                <div>
+                  <a href=#none >
+                    안녕
+                  </a>
+                </div>
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
                 <form class="mx-1 mx-md-4" th:action="@{signUpPost}" th:method="post" th:object="${userinfo}">
