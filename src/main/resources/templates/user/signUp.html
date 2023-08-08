@@ -3,7 +3,18 @@
 <head>
   <meta charset="UTF-8"/>
   <th:block th:replace="fragment/defaultSet :: defaultSetFragment"></th:block>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
  <title>RACCOON</title>
+
+  <script >
+    axios({
+      url: '/user/sendAuthSMS', // URL
+      method: 'post', // 통신할 방식
+      data: { // 인자로 보낼 데이터
+        receiver: $('#celno').val();
+      }
+    });
+  </script>
 </head>
 <body>
 <section class="vh-100" style="background-color: #eee;">
