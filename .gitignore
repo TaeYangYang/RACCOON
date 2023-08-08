@@ -47,3 +47,4 @@ bin/
 *.iml
 out
 gen
+application.properties
