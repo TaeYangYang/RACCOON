@@ -1,0 +1,3 @@
+serverIP : 54.180.76.106 (AWS)
+
+powerShell : ssh -i "TaeYang.pem" ubuntu@ec2-54-180-76-106.ap-northeast-2.compute.amazonaws.com
