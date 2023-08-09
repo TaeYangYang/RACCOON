@@ -16,8 +16,9 @@ public class UserServiceImpl implements UserService {
 
   private final PasswordEncoder passwordEncoder;
 
+  @Override
   @Transactional
-  public void signUp(Userinfo userinfo){
+  public void insertUserinfo(Userinfo userinfo){
     userinfo.setPassword(passwordEncoder.encode(userinfo.getPassword()));
     userRepository.save(userinfo);
   }
