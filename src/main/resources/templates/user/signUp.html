@@ -12,7 +12,7 @@
       url: '/user/sendAuthSMS', // URL
       method: 'post', // 통신할 방식
       data: { // 인자로 보낼 데이터
-        receiver: $('#celno').val();
+        receiver: $('#celno').val()
       }
     });
     }
@@ -68,7 +68,7 @@
                   <div class="object">
                     <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" th:field="*{usernm}" class="form-control" placeholder="이름"/>
+                      <input type="text" th:field="*{username}" class="form-control" placeholder="이름"/>
                     </div>
                   </div>
 
