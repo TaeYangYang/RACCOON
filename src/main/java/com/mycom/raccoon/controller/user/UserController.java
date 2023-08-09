@@ -42,20 +42,6 @@ public class UserController {
   }
 
   /**
-   * 본인인증(SMS) 페이지
-   * @param userinfo
-   * @param request
-   * @param response
-   * @param model
-   * @return String view
-   */
-  @GetMapping("signAuth")
-  public String signAuth(Userinfo userinfo, HttpServletRequest request, HttpServletResponse response, Model model) {
-    model.addAttribute("userinfo", userinfo);
-    return "user/signAuth";
-  }
-
-  /**
    * 회원가입 페이지 진입
    * @param userinfo
    * @param request
@@ -63,7 +49,7 @@ public class UserController {
    * @param model
    * @return String view
    */
-  @PostMapping("signUp")
+  @GetMapping("signUp")
   public String signUp(Userinfo userinfo, HttpServletRequest request, HttpServletResponse response, Model model) {
     model.addAttribute("userinfo", userinfo);
     return "user/signUp";
@@ -72,7 +58,8 @@ public class UserController {
   @PostMapping("signUpPost")
   public String signUpPost(Userinfo userinfo, HttpServletRequest request, HttpServletResponse response, ModelMap model){
     userService.insertUserinfo(userinfo);
-    return "/";
+    model.addAttribute("userinfo", userinfo);
+    return "user/signUpFinish";
   }
 
   /**

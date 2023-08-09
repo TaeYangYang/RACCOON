@@ -4,8 +4,12 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Getter
@@ -28,7 +32,8 @@ public class Userinfo {
   private String address2;
   private String user_auth;
 
-  @Column(name = "inpt_dttm", updatable = false)
+  @Column(name = "inpt_dttm")
+  @CreationTimestamp
   private LocalDateTime inptdttm;
   @Column(name = "updt_dttm")
   private LocalDateTime updtdttm;

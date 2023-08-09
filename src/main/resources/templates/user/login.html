@@ -17,10 +17,8 @@
       });
     }
 
-    function nextStep(){
-      if(false){
-
-      } else{
+    function checkVal(){
+      if(confirm('가입하시겠습니까?')){
         $('#signUpForm').submit();
       }
     }
@@ -43,17 +41,24 @@
                   <p class="h1 fw-bold">Sign up</p>
                 </div>
                 <div class="newpage">
-                  <form id="signUpForm" class="mx-1 mx-md-4" th:action="@{signUp}" th:method="post" th:object="${userinfo}">
+                  <form id="signUpForm" class="mx-1 mx-md-4" th:action="@{signUpPost}" th:method="post" th:object="${userinfo}">
 
                     <div class="object">
                       <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="text" th:field="*{celno}" class="form-control" placeholder="연락처( - 제외하고 입력)"/>
+                        <input type="text" th:field="*{userid}" class="form-control" placeholder="아이디(4~12글자)"/>
+                      </div>
+                    </div>
+
+                    <div class="object">
+                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="password" th:field="*{password}" class="form-control" placeholder="패스워드"/>
                       </div>
                     </div>
 
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <button type="button" class="btn btn-raccoon btn-lg active btn-block btn-design" onclick="nextStep();">다음</button>
+                      <button type="button" class="btn btn-raccoon btn-lg active btn-block btn-design" onclick="checkVal();">가입하기</button>
                     </div>
                   </form>
                 </div>
