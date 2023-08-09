@@ -4,6 +4,12 @@
   <meta charset="UTF-8"/>
   <th:block th:replace="fragment/defaultSet :: defaultSetFragment"></th:block>
   <title>RACCOON</title>
+
+  <script>
+    function signUp(){
+      location.href = './signUp';
+    }
+  </script>
 </head>
 <body>
 <section class="vh-100" style="background-color: #eee;">
@@ -21,7 +27,7 @@
 
 
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="button" class="btn btn-primary btn-lg">Register</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="signUp();">회원가입</button>
                   </div>
                 </form>
               </div>

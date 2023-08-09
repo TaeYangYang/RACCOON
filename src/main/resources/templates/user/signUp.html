@@ -6,14 +6,24 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
  <title>RACCOON</title>
 
-  <script >
-    axios({
+  <script>
+    function sendSMS(){
+      axios({
       url: '/user/sendAuthSMS', // URL
       method: 'post', // 통신할 방식
       data: { // 인자로 보낼 데이터
         receiver: $('#celno').val();
       }
     });
+    }
+
+    function checkVal(){
+
+      if(confirm('가입하시겠습니까?')){
+        
+      }
+    }
+
   </script>
 </head>
 <body>
@@ -68,9 +78,16 @@
                       <input type="text" th:field="*{nickname}" class="form-control" placeholder="닉네임(최대 10글자)"/>
                     </div>
                   </div>
-                </div>
+
+                  <div class="object">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" th:field="*{celno}" class="form-control" placeholder="연락처( - 제외하고 입력)"/>
+                    </div>
+                  </div>
+
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="button" class="btn btn-raccoon btn-default btn-design">Register</button>
+                    <button type="button" class="btn btn-raccoon btn-default btn-design" onclick="checkVal();">가입하기</button>
                   </div>
                 </form>
               </div>
