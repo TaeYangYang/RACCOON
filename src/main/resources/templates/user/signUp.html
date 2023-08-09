@@ -18,9 +18,8 @@
     }
 
     function checkVal(){
-
       if(confirm('가입하시겠습니까?')){
-
+        $('#signUpForm').submit();
       }
     }
 
@@ -91,7 +90,7 @@
                   <div class="object">
                     <p class="obTitle">연락처</p>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" th:field="*{celno}" class="form-control" placeholder="연락처( - 제외하고 입력)"/>
+                      <input type="text" th:field="*{celno}" class="form-control" placeholder="연락처( - 제외하고 입력)">
                     </div>
                   </div>
 
