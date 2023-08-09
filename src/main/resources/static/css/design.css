@@ -1,5 +1,46 @@
 /*text.css*/
 
+
+.signuppage ul{
+  margin: 0;
+  padding: 0;
+  display: block;
+  height: auto;
+  text-align: center;
+}
+
+ul li.signli{
+  list-style-type: none;
+  display: inline-block;
+  font-size: 14px;
+  letter-spacing: -1.5px;
+  width: 150px;
+  margin: 0;
+  text-align: center;
+  padding: 5px 0;
+}
+
+ul li.signli a{
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  border: 2px solid rgb(185, 190, 196);
+  display: inline-block;
+  text-align: center;
+  background-color: rgb(185, 190, 196);
+  margin: 0;
+  padding: 0;
+}
+
+
+ul.signinfo li.on a {
+  background-color: #fff;
+  color: #F3B562;
+  border: 2px solid #F3B562;
+}
+
+
+
 .logo {
   height: 150px;
 }
@@ -61,25 +102,25 @@
   margin: 0 0 0 10px;
 }
 
-.signuppage form div.object {
-  padding: 0 0 5px 0 ;
-  color: #5e5e5e;
-  margin: 0;
-  margin-top: -10px;
+.object p.obTitle {
+  margin: 5px 0 5px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
-.signuppage form div.object p {
+.object div input {
   font-size: 12px;
-  padding: 5px 0 0 5px;
 }
 
 .btn-design {
   margin-top: 20px;
   width: 100%;
- }
+  font-size: 14px;
+  height: 40px;
+}
 
 
- .btn-raccoon {
+.btn-raccoon {
   --bs-btn-color: #fff;
   --bs-btn-bg: #422E19;
   --bs-btn-border-color: #422E19;
