@@ -75,6 +75,7 @@
 
 .btn-design {
   margin-top: 20px;
+  width: 100%;
  }
 
 
@@ -94,3 +95,11 @@
   --bs-btn-disabled-bg: #422E19;
   --bs-btn-disabled-border-color: #422E19;
 }
+
+.btn-raccoon:hover {
+  color: #ffffff;
+  background-color: #8C7968;
+  border-color: #8C7968;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4)
+}
+
