@@ -1,5 +1,9 @@
 /*text.css*/
 
+#title {
+  font-size: 20px;
+  display: inline-block;
+}
 
 .signuppage ul{
   margin: 0;
@@ -27,7 +31,6 @@ ul li.signli a{
   border: 2px solid rgb(185, 190, 196);
   display: inline-block;
   text-align: center;
-  background-color: rgb(185, 190, 196);
   margin: 0;
   padding: 0;
 }
