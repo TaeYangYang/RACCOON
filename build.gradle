@@ -47,6 +47,11 @@ dependencies {
 
   //SMS
   implementation 'net.nurigo:sdk:4.3.0'
+  //lucy Xss filter
+  implementation group: 'com.navercorp.lucy', name: 'lucy-xss-servlet', version: '2.0.1'
+
+  //spring-security-crypto
+  implementation 'org.springframework.security:spring-security-crypto:5.7.1'
 }
 
 test {

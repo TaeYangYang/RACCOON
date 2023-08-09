@@ -44,7 +44,8 @@ bin/
 
 # IntelliJ project files
 .idea
-*.iml
 out
 gen
-application.properties
+
+# properties
+#**/application.properties
