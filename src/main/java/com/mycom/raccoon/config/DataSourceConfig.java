@@ -36,7 +36,7 @@ public class DataSourceConfig {
   }
 
   @Primary
-  @Bean(name = "oracle_entityManagerFactory")
+  @Bean(name = "baseEntityManager")
   public LocalContainerEntityManagerFactoryBean entityManagerFactory(
           EntityManagerFactoryBuilder builder,
           @Qualifier("oracle_dataSource") DataSource dataSource) {
@@ -50,9 +50,9 @@ public class DataSourceConfig {
   }
 
   @Primary
-  @Bean(name = "oracle_transactionManager")
+  @Bean(name = "baseTransactionManager")
   public PlatformTransactionManager transactionManager(
-          @Qualifier("oracle_entityManagerFactory") EntityManagerFactory entityManagerFactory) {
+          @Qualifier("baseEntityManager") EntityManagerFactory entityManagerFactory) {
     JpaTransactionManager transactionManager = new JpaTransactionManager();
     transactionManager.setEntityManagerFactory(entityManagerFactory);
     return transactionManager;

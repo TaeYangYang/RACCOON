@@ -1,17 +1,21 @@
-package com.mycom.raccoon.controller;
+package com.mycom.raccoon.controller.user;
 
 import com.mycom.raccoon.common.UtilClass;
 import com.mycom.raccoon.entity.Userinfo;
+import com.mycom.raccoon.service.UserService;
+import lombok.RequiredArgsConstructor;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value = "user")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
-  final DefaultMessageService messageService;
+  private DefaultMessageService messageService;
+
+  UserService userService;
 
   @Value("#{keyPropertiesFactoryBean['coolsms.key']}")
   private String coolsmsKey; // sms발송 키
@@ -53,6 +60,12 @@ public class UserController {
   public String signUp(Userinfo userinfo, HttpServletRequest request, HttpServletResponse response, Model model) {
     model.addAttribute("userinfo", userinfo);
     return "user/signUp";
+  }
+
+  @PostMapping("signUpPost")
+  public String signUpPost(Userinfo userinfo, HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    //userService
+    return "/";
   }
 
   /**

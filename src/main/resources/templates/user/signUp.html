@@ -20,7 +20,7 @@
     function checkVal(){
 
       if(confirm('가입하시겠습니까?')){
-        
+
       }
     }
 
@@ -42,12 +42,12 @@
                   <p class="h1 fw-bold">Sign up</p>
                 </div>
                 <div class="newpage">
-                <form class="mx-1 mx-md-4" th:action="@{signUpPost}" th:method="post" th:object="${userinfo}">
+                <form id="signUpForm" class="mx-1 mx-md-4" th:action="@{signUpPost}" th:method="post" th:object="${userinfo}">
 
                   <div class="object">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" th:field="*{user_id}" class="form-control" placeholder="아이디(4~12글자)"/>
+                      <input type="text" th:field="*{userid}" class="form-control" placeholder="아이디(4~12글자)"/>
                     </div>
                   </div>
 
@@ -68,7 +68,7 @@
                   <div class="object">
                     <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" th:field="*{user_nm}" class="form-control" placeholder="이름"/>
+                      <input type="text" th:field="*{usernm}" class="form-control" placeholder="이름"/>
                     </div>
                   </div>
 
