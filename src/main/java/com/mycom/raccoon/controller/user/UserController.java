@@ -56,9 +56,9 @@ public class UserController {
   }
 
   @PostMapping("signUpPost")
-  public String signUpPost(Userinfo userinfo, HttpServletRequest request, HttpServletResponse response, ModelMap model){
-    userService.insertUserinfo(userinfo);
-    model.addAttribute("userinfo", userinfo);
+  public String signUpPost(Userinfo to, HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    userService.insertUserinfo(to);
+    model.addAttribute("userinfo", to);
     return "user/signUpFinish";
   }
 
@@ -70,10 +70,26 @@ public class UserController {
     String coolsmsKey = environment.getProperty("coolsms.key"); // sms발송 키
     String coolsmsSecret = environment.getProperty("coolsms.secret"); // sms발송 시크릿 키
 
-    String authCode = UtilClass.getRandomNumber(6);
+    String authCode = UtilClass.getRandomNumber(6); // 6자리 인증코드
+    
+    //SMS 발송 메소드
     //UtilClass.sendCoolSms(coolsmsKey, coolsmsSecret, "01041850434", "01084676191", "RACCOON [인증번호] : " + authCode);
 
-    //return authCode;
+    //return authCode; // 인증코드 return
     return "000000";
   }
+
+  @GetMapping("login")
+  public String login(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    model.addAttribute("userinfo", new Userinfo());
+    return "user/login";
+  }
+
+  @PostMapping("login")
+
+  public String loginPost(Userinfo to, HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    boolean isLoginSuccess = userService.selectLogin(request, to);
+    return "/index";
+  }
+  
 }

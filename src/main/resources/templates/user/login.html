@@ -4,22 +4,42 @@
   <meta charset="UTF-8"/>
   <th:block th:replace="fragment/defaultSet :: defaultSetFragment"></th:block>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <title>RACCOON</title>
-
   <script>
-    function sendSMS(){
-      axios({
-        url: '/user/sendAuthSMS', // URL
-        method: 'post', // 통신할 방식
-        data: { // 인자로 보낼 데이터
-          receiver: $('#celno').val()
+    $(document).ready(function(){
+      $('#userid, #password').on('keypress', function(e){
+        if(e.keyCode === 13){
+          login();
         }
       });
-    }
+    });
 
-    function checkVal(){
-      if(confirm('가입하시겠습니까?')){
-        $('#signUpForm').submit();
+    function login(){
+      if($('#userid').val() === ''){
+        alert('아이디를 입력해주세요.');
+        $('#userid').focus();
+        return false;
+      } else if($('#password').val() === ''){
+        alert('비밀번호를 입력해주세요.');
+        $('#password').focus();
+        return false;
+      } else{
+        const userid = $('#userid').val();
+        const password=  $('#password').val();
+        axios({
+          method: 'post', //통신 방식
+          url: '/user/login', //통신할 페이지
+          data: {
+            userid
+          } //인자로 보낼 데이터
+        })
+            .then(response=>{
+              document.getElementById('boom').innerText=response.data.num;
+              console.log(response);
+            })
+            .catch(error=>{
+              document.getElementById('boom').innerText='error';
+              console.log(error);
+            })
       }
     }
 
@@ -38,27 +58,30 @@
                   <a href="/" >
                     <img class="logo singlogo" src="/img/common/logo/Raccoon_org.png">
                   </a>
-                  <p class="h1 fw-bold">Sign up</p>
                 </div>
                 <div class="newpage">
-                  <form id="signUpForm" class="mx-1 mx-md-4" th:action="@{signUpPost}" th:method="post" th:object="${userinfo}">
+                  <form id="loginForm" class="mx-1 mx-md-4" th:action="@{login}" th:method="post" th:object="${userinfo}">
 
                     <div class="object">
                       <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="text" th:field="*{userid}" class="form-control" placeholder="아이디(4~12글자)"/>
+                        <input type="text" th:field="*{userid}" class="form-control" placeholder="아이디"/>
                       </div>
                     </div>
 
                     <div class="object">
                       <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="password" th:field="*{password}" class="form-control" placeholder="패스워드"/>
+                        <input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호"/>
                       </div>
                     </div>
 
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <button type="button" class="btn btn-raccoon btn-lg active btn-block btn-design" onclick="checkVal();">가입하기</button>
+                      <button type="button" class="btn btn-raccoon btn-lg active btn-block btn-design" onclick="login();">로그인</button>
+                    </div>
+                    <div>
+                      <span><a href="#none">아이디 찾기</a></span>
+                      <span><a href="#none">비밀번호 찾기</a></span>
                     </div>
                   </form>
                 </div>
@@ -68,6 +91,7 @@
         </div>
       </div>
     </div>
+  </div>
 </section>
 
 <!--<p>ID :: <span th:text="${id}"></span></p>-->

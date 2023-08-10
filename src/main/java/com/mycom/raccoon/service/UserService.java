@@ -1,9 +1,18 @@
 package com.mycom.raccoon.service;
 
 import com.mycom.raccoon.entity.Userinfo;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpServletRequest;
 
 public interface UserService {
 
 
-  void insertUserinfo(Userinfo userinfo);
+  void insertUserinfo(Userinfo to);
+
+
+  @Transactional(readOnly = true)
+  boolean selectLogin(HttpServletRequest request, Userinfo to);
+
+  void setSession(HttpServletRequest request, Userinfo userinfo);
 }

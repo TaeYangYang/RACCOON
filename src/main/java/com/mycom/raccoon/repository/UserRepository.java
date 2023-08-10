@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<Userinfo, Integer> {
-  Userinfo findByUserid(String userid);
+  public Userinfo findByUserid(String userid);
 
-  List<Userinfo> findAll();
+  public List<Userinfo> findAll();
 }

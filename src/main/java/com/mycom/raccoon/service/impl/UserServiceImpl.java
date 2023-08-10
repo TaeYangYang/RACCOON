@@ -8,6 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,8 +21,34 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional
-  public void insertUserinfo(Userinfo userinfo){
-    userinfo.setPassword(passwordEncoder.encode(userinfo.getPassword()));
-    userRepository.save(userinfo);
+  public void insertUserinfo(Userinfo to){
+    to.setPassword(passwordEncoder.encode(to.getPassword()));
+    userRepository.save(to);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public boolean selectLogin(HttpServletRequest request, Userinfo to){
+    Userinfo userinfo = userRepository.findByUserid(to.getUserid());
+
+    if(userinfo.getUserid() == null || userinfo == null){
+      return false;
+    } else if(!to.getUserid().equals(userinfo.getUserid()) || !passwordEncoder.matches(to.getPassword(), userinfo.getPassword())){
+      return false;
+    } else{
+      setSession(request, userinfo);
+      return true;
+    }
+  }
+
+  @Override
+  public void setSession(HttpServletRequest request, Userinfo userinfo) {
+    HttpSession session = request.getSession();
+
+    session.setAttribute("userid", userinfo.getUserid());
+    session.setAttribute("username", userinfo.getUsername());
+    session.setAttribute("celno", userinfo.getCelno());
+    session.setAttribute("nickname", userinfo.getNickname());
+
   }
 }
