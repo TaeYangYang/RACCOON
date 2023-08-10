@@ -1,6 +1,7 @@
 package com.mycom.raccoon.controller.user;
 
 import com.mycom.raccoon.common.UtilClass;
+import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.entity.Userinfo;
 import com.mycom.raccoon.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -86,10 +88,9 @@ public class UserController {
   }
 
   @PostMapping("login")
-
-  public String loginPost(Userinfo to, HttpServletRequest request, HttpServletResponse response, ModelMap model){
-    boolean isLoginSuccess = userService.selectLogin(request, to);
-    return "/index";
+  @ResponseBody
+  public ResponseDTO loginPost(Userinfo to, HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    return userService.selectLogin(request, to);
   }
   
 }

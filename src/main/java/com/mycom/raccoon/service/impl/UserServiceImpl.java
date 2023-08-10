@@ -1,5 +1,6 @@
 package com.mycom.raccoon.service.impl;
 
+import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.entity.Userinfo;
 import com.mycom.raccoon.repository.UserRepository;
 import com.mycom.raccoon.service.UserService;
@@ -28,17 +29,18 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional(readOnly = true)
-  public boolean selectLogin(HttpServletRequest request, Userinfo to){
+  public ResponseDTO selectLogin(HttpServletRequest request, Userinfo to){
+    ResponseDTO responseDTO = new ResponseDTO();
     Userinfo userinfo = userRepository.findByUserid(to.getUserid());
 
-    if(userinfo.getUserid() == null || userinfo == null){
-      return false;
-    } else if(!to.getUserid().equals(userinfo.getUserid()) || !passwordEncoder.matches(to.getPassword(), userinfo.getPassword())){
-      return false;
+    if(userinfo == null || !to.getUserid().equals(userinfo.getUserid()) || !passwordEncoder.matches(to.getPassword(), userinfo.getPassword())){
+      responseDTO.setResultVal("UserNull");
     } else{
       setSession(request, userinfo);
-      return true;
+      responseDTO.setResultVal("Success");
     }
+
+    return responseDTO;
   }
 
   @Override

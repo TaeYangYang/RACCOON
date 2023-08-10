@@ -1,5 +1,6 @@
 package com.mycom.raccoon.service;
 
+import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.entity.Userinfo;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,7 @@ public interface UserService {
 
 
   @Transactional(readOnly = true)
-  boolean selectLogin(HttpServletRequest request, Userinfo to);
+  ResponseDTO selectLogin(HttpServletRequest request, Userinfo to);
 
   void setSession(HttpServletRequest request, Userinfo userinfo);
 }
