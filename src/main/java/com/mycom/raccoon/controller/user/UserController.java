@@ -1,6 +1,7 @@
 package com.mycom.raccoon.controller.user;
 
 import com.mycom.raccoon.common.UtilClass;
+import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.entity.Userinfo;
 import com.mycom.raccoon.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -85,11 +84,21 @@ public class UserController {
     return "user/login";
   }
 
-  @PostMapping("login")
+  @GetMapping("loginAxios")
+  @ResponseBody
+  public ResponseDTO loginAxios(Userinfo to, HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    return userService.selectLogin(request, to);
+  }
 
-  public String loginPost(Userinfo to, HttpServletRequest request, HttpServletResponse response, ModelMap model){
-    boolean isLoginSuccess = userService.selectLogin(request, to);
+  @GetMapping("logout")
+  public String logout(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    userService.getLogout(request);
     return "/index";
   }
-  
+
+  @GetMapping("selectUseridAxios")
+  @ResponseBody
+  public String selectUseridAxios(@RequestParam String userid, HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    return userService.selectUserid(userid);
+  }
 }

@@ -9,14 +9,44 @@
   <script>
     let authCheck = false;
     let idCheck = false;
+
+    //인증번호 전송
     function sendSMS(){
-      axios({
-      url: '/user/sendAuthSMS', // URL
-      method: 'post', // 통신할 방식
-      data: { // 인자로 보낼 데이터
-        receiver: $('#celno').val()
+      let celno = docuemnt.querySelector('#celno').value;
+      axios.post(`/user/sendAuthSMS`, celno, {withCredentials: false})
+          .then(res => {
+            authCheck = true;
+          })
+          .catch(err => {
+            alert('ERROR');
+          })
+
+    }
+
+    //아이디 중복확인
+    function checkDup(){
+      let userid = document.querySelector('#userid').value;
+
+      if(userid === ''){
+        alert('아이디를 입력해주세요.');
+        return false;
+      } else{
+        axios.get(`/user/selectUseridAxios`, userid, {withCredentials: false})
+            .then(res => {
+              console.log(res.data);
+              if(res == null){
+                idCheck = true;
+                alert('사용가능합니다.');
+              } else{
+                idCheck = false;
+                alert('이미 존재하는 아이디입니다.');
+              }
+            })
+            .catch(err => {
+              alert('ERROR');
+            })
       }
-    });
+
     }
 
     //회원가입 유효성검사
