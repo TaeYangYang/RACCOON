@@ -171,10 +171,10 @@
 
                   <div class="object">
                     <p class="obTitle">아이디</p>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="text" th:field="*{userid}" class="form-control" placeholder="4~12자리 영문 소문자, 숫자 사용"/>
+                    <div class="form-outline flex-fill mb-">
+                      <input type="text" th:field="*{userid}" class="form-control-raccoon" placeholder="4~12자리 영문 소문자, 숫자 사용"/>
+                      <button class="btn20" type="button" onclick="checkDup();">중복확인</button>
                     </div>
-                    <button type="button" onclick="checkDup();">중복확인</button>
                   </div>
 
                   <div class="object">
@@ -208,17 +208,17 @@
                   <div class="object">
                     <p class="obTitle">연락처</p>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" th:field="*{celno}" class="form-control" placeholder="- 제외하고 입력" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');">
+                      <input type="text" th:field="*{celno}" class="form-control-raccoon" placeholder="- 제외하고 입력" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');">
+                      <button class="btn20" type="button">인증번호 받기</button>
                     </div>
-                    <button type="button">인증번호 받기</button>
                   </div>
                   
                   <div class="object">
                     <p class="obTitle">인증번호</p>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="authcode" name="authcode" class="form-control" >
+                      <input type="text" id="authcode" name="authcode" class="form-control-raccoon" >
+                      <button class="btn20" type="button">인증번호 확인</button>
                     </div>
-                    <button type="button">인증번호 확인</button>
                   </div>
 
                   <div>

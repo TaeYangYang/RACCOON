@@ -5,8 +5,9 @@ a {
 }
 
 #title {
-  font-size: 20px;
+  font-size: 25px;
   display: inline-block;
+  font-weight: 600;
 }
 
 .signuppage ul{
@@ -103,10 +104,10 @@ ul.signinfo li.on a {
   height: 100px;
 }
 
-.signHeader p {
+.signHeader h1 {
   display: inline-block;
   position: absolute;
-  bottom: 30%;
+  bottom: 35%;
   margin: 0 0 0 10px;
 }
 
@@ -156,7 +157,42 @@ ul.signinfo li.on a {
 .btn-raccoon:hover {
   color: #ffffff;
   background-color: #8C7968;
-  border-color: #8C7968;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4)
+  border-color: hsl(28, 15%, 48%);
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.13);
 }
 
+.form-control-raccoon {
+  display: inline-block;
+  width: 72%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.375rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn20 {
+  width: 27%;
+  background-color: #efefef;
+  display: inline-block;
+  padding: 0.375rem 0rem;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  border-radius: 0.375rem;
+  border: 1px solid #ced4da;
+  transition: color 0.15s ease-in-out, background-color 5s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  float: right;
+}
+
+.btn20:hover {
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.13);
+}
