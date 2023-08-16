@@ -11,6 +11,8 @@
           login();
         }
       });
+
+      $('#userid').focus();
     });
 
     function login() {
@@ -25,23 +27,24 @@
       } else {
         const userid = $('#userid').val();
         const password = $('#password').val();
-        axios({
-          method: 'post', //통신 방식
-          url: '/user/login', //통신할 페이지
-          data: {
-            userid: userid,
-            password: password
-          } //인자로 보낼 데이터
+
+        axios.get(`/user/loginAxios`,{
+            params: {
+              userid: userid,
+              password: password
+            }
         })
-            .then(response => {
-              if (response.data.resultVal === 'Success') {
+            .then(res => {
+              if (res.data.resultVal === 'UserNull') {
                 alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+                return false;
               } else {
                 location.href = '/';
               }
             })
-            .catch(error => {
-              alert('error');
+            .catch(err => {
+              alert('ERROR');
+              console.log('ERROR');
             })
       }
     }
@@ -86,6 +89,7 @@
                       </button>
                     </div>
                     <div>
+                      <span><a href="./signUpList">회원가입</a></span>
                       <span><a href="#none">아이디 찾기</a></span>
                       <span><a href="#none">비밀번호 찾기</a></span>
                     </div>

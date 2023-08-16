@@ -16,4 +16,10 @@ public interface UserService {
   ResponseDTO selectLogin(HttpServletRequest request, Userinfo to);
 
   void setSession(HttpServletRequest request, Userinfo userinfo);
+
+  void getLogout(HttpServletRequest request);
+
+  void deleteSession(HttpServletRequest request);
+
+  String selectUserid(String userid);
 }

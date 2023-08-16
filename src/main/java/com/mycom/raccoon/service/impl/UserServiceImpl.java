@@ -47,10 +47,35 @@ public class UserServiceImpl implements UserService {
   public void setSession(HttpServletRequest request, Userinfo userinfo) {
     HttpSession session = request.getSession();
 
-    session.setAttribute("userid", userinfo.getUserid());
-    session.setAttribute("username", userinfo.getUsername());
-    session.setAttribute("celno", userinfo.getCelno());
-    session.setAttribute("nickname", userinfo.getNickname());
+    session.setAttribute("userid", userinfo.getUserid()); // 아이디
+    session.setAttribute("username", userinfo.getUsername()); // 유저명
+    session.setAttribute("celno", userinfo.getCelno()); // 연락처
+    session.setAttribute("nickname", userinfo.getNickname()); // 닉네임
 
+  }
+
+  @Override
+  public void getLogout(HttpServletRequest request){
+    deleteSession(request);
+  }
+
+  @Override
+  public void deleteSession(HttpServletRequest request){
+    HttpSession session = request.getSession();
+
+    session.removeAttribute("userid");
+    session.removeAttribute("username");
+    session.removeAttribute("celno");
+    session.removeAttribute("nickname");
+  }
+
+  @Override
+  public String selectUserid(String userid){
+    Userinfo userinfo = userRepository.findByUserid(userid);
+    if(userinfo == null){
+      return null;
+    } else{
+      return userinfo.getUserid();
+    }
   }
 }
