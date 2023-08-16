@@ -78,18 +78,32 @@ public class UserController {
     return "000000";
   }
 
+  /**
+   * 로그인 페이지 진입
+   */
   @GetMapping("login")
   public String login(HttpServletRequest request, HttpServletResponse response, ModelMap model){
     model.addAttribute("userinfo", new Userinfo());
     return "user/login";
   }
 
+  /**
+   * 아이디, 패스워드로 회원존재여부 조회
+   * @param Userinfo
+   * @param request
+   * @param response
+   * @param model
+   * @return ResponseDTO
+   */
   @GetMapping("loginAxios")
   @ResponseBody
   public ResponseDTO loginAxios(Userinfo to, HttpServletRequest request, HttpServletResponse response, ModelMap model){
     return userService.selectLogin(request, to);
   }
 
+  /**
+   * 로그아웃
+   */
   @GetMapping("logout")
   public String logout(HttpServletRequest request, HttpServletResponse response, ModelMap model){
     userService.getLogout(request);
@@ -98,7 +112,7 @@ public class UserController {
 
   @GetMapping("selectUseridAxios")
   @ResponseBody
-  public String selectUseridAxios(@RequestParam String userid, HttpServletRequest request, HttpServletResponse response, ModelMap model){
+  public String selectUseridAxios(String userid, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
     return userService.selectUserid(userid);
   }
 }

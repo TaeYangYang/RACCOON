@@ -7,15 +7,18 @@
   <title>RACCOON</title>
 
   <script>
-    let authCheck = false;
-    let idCheck = false;
+    let authCheck = false; // 인증번호 확인여부
+    let idCheck = false; // 아이디 중복확인
+    let authCode; // 인증번호
 
     //인증번호 전송
     function sendSMS(){
       let celno = docuemnt.querySelector('#celno').value;
       axios.post(`/user/sendAuthSMS`, celno, {withCredentials: false})
           .then(res => {
+            alert('인증번호가 발송되었습니다.');
             authCheck = true;
+            authCode = res.data;
           })
           .catch(err => {
             alert('ERROR');
@@ -31,18 +34,24 @@
         alert('아이디를 입력해주세요.');
         return false;
       } else{
-        axios.get(`/user/selectUseridAxios`, userid, {withCredentials: false})
+        axios.get(`/user/selectUseridAxios`,
+            {
+              params: {
+                userid: userid
+              }
+            },
+            {withCredentials: false})
             .then(res => {
-              console.log(res.data);
-              if(res == null){
+              if(res.data == null || res.data == ''){
                 idCheck = true;
-                alert('사용가능합니다.');
+                alert('사용 가능한 아이디입니다.');
               } else{
                 idCheck = false;
                 alert('이미 존재하는 아이디입니다.');
               }
             })
             .catch(err => {
+              console.log(err);
               alert('ERROR');
             })
       }

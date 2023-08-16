@@ -70,8 +70,13 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public String selectUserid(String userid){
+  @Transactional(readOnly = true)
+  public String selectUserid(String userid) throws Exception{
+    if(userid == null || userid.isEmpty()){
+      throw new Exception(); // 파라미터가 넘어오지 않는 경우
+    }
     Userinfo userinfo = userRepository.findByUserid(userid);
+    //아이디 존재하는지 조회해서 리턴
     if(userinfo == null){
       return null;
     } else{

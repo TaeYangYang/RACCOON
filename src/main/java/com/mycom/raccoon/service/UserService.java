@@ -21,5 +21,6 @@ public interface UserService {
 
   void deleteSession(HttpServletRequest request);
 
-  String selectUserid(String userid);
+  @Transactional(readOnly = true)
+  String selectUserid(String userid) throws Exception;
 }
