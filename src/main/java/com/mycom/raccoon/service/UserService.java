@@ -52,6 +52,11 @@ public interface UserService {
   @Transactional(readOnly = true)
   public String selectUserid(String userid) throws Exception;
 
+  /**
+   * 닉네임 존재여부 조회
+   * @param String nickname
+   * @return String
+   */
   @Transactional(readOnly = true)
-  public String selectNickname(String nickname);
+  public String selectNickname(String nickname) throws Exception;
 }

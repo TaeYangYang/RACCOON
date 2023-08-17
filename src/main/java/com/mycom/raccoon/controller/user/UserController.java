@@ -115,4 +115,10 @@ public class UserController {
   public String selectUseridAxios(String userid, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
     return userService.selectUserid(userid);
   }
+
+  @GetMapping("selectNicknameAxios")
+  @ResponseBody
+  public String selectNicknameAxios(String nickname, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
+    return userService.selectNickname(nickname);
+  }
 }

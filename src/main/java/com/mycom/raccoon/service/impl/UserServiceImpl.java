@@ -85,7 +85,16 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public String selectNickname(String nickname) {
-    return null;
+  public String selectNickname(String nickname) throws Exception{
+    if(nickname == null || nickname.isEmpty()){
+      throw new Exception(); // 파라미터가 넘어오지 않는 경우
+    }
+    Userinfo userinfo = userRepository.findByNickname(nickname);
+    //아이디 존재하는지 조회해서 리턴
+    if(userinfo == null){
+      return null;
+    } else{
+      return userinfo.getNickname();
+    }
   }
 }

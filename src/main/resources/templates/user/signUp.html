@@ -10,16 +10,13 @@
     let idDupCheck = false; // 아이디 중복확인
     let authCheck = false; // 인증번호 확인여부
     let authCode; // 인증번호
-    let idDupCheck = false; // 아이디 중복확인
-    let nicknameDupCheck = false;
+    let nicknameDupCheck = false; // 닉네임 중복여부
 
     $(document).ready(function(){
-
     });
 
-
-        //아이디 중복확인
-        function checkDup(){
+    //아이디 중복확인
+    function checkDup(){
       let userId = document.getElementById('userid');
       let idChk = /^[a-z0-9]{4,12}$/;
 
@@ -191,6 +188,34 @@
       }
     }
 
+    function checkNicknameDup(obj){
+      let nickname = obj.value;
+      if(nickname == ''){
+        $('#nickNameDupMsg').html('');
+      } else{
+        axios.get(`/user/selectNicknameAxios`,
+            {
+              params: {
+                nickname: obj.value
+              }
+            },
+            {withCredentials: false})
+            .then(res => {
+              if(res.data == null || res.data == ''){
+                nicknameDupCheck = true;
+                $('#nickNameDupMsg').html('사용가능한 닉네임입니다.');
+              } else{
+                nicknameDupCheck = false;
+                $('#nickNameDupMsg').html('<span style="color:red;">이미 존재하는 닉네임입니다.<span>');
+              }
+            })
+            .catch(err => {
+              console.log(err);
+              alert('ERROR');
+            })
+      }
+
+    }
     
   </script>
 </head>
@@ -254,7 +279,8 @@
                   <div class="object">
                     <p class="obTitle">닉네임</p>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" th:field="*{nickname}" class="form-control" placeholder="1~10자리 영문,한글 사용" maxlength="10"/>
+                      <input type="text" th:field="*{nickname}" class="form-control" placeholder="1~10자리 영문,한글 사용" maxlength="10" onkeyup="checkNicknameDup(this);"/>
+                      <p id="nickNameDupMsg"></p>
                     </div>
                   </div>
 

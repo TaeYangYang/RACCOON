@@ -10,5 +10,5 @@ public interface UserRepository extends JpaRepository<Userinfo, Integer> {
 
   public List<Userinfo> findAll();
 
-  //public Userinfo
+  public Userinfo findByNickname(String nickname);
 }
