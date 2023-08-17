@@ -9,4 +9,6 @@ public interface UserRepository extends JpaRepository<Userinfo, Integer> {
   public Userinfo findByUserid(String userid);
 
   public List<Userinfo> findAll();
+
+  //public Userinfo
 }

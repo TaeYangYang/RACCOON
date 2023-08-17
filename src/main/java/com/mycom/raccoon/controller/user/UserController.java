@@ -65,14 +65,14 @@ public class UserController {
    * 단일 메시지 발송
    */
   @PostMapping("sendAuthSMS")
-  public String sendOne(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+  @ResponseBody
+  public String sendAuthSMS(@RequestBody String celno, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
     String coolsmsKey = environment.getProperty("coolsms.key"); // sms발송 키
     String coolsmsSecret = environment.getProperty("coolsms.secret"); // sms발송 시크릿 키
-
     String authCode = UtilClass.getRandomNumber(6); // 6자리 인증코드
-    
+
     //SMS 발송 메소드
-    //UtilClass.sendCoolSms(coolsmsKey, coolsmsSecret, "01041850434", "01084676191", "RACCOON [인증번호] : " + authCode);
+    //UtilClass.sendCoolSms(coolsmsKey, coolsmsSecret, "01041850434", celno, "RACCOON [인증번호] : " + authCode);
 
     //return authCode; // 인증코드 return
     return "000000";

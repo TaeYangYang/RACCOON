@@ -83,4 +83,9 @@ public class UserServiceImpl implements UserService {
       return userinfo.getUserid();
     }
   }
+
+  @Override
+  public String selectNickname(String nickname) {
+    return null;
+  }
 }

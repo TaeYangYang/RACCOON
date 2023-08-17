@@ -10,18 +10,28 @@
     let authCheck = false; // 인증번호 확인여부
     let authCode; // 인증번호
     let idDupCheck = false; // 아이디 중복확인
+    let nicknameDupCheck = false;
+
+    $(document).ready(function(){
+
+    });
 
     //인증번호 전송
     function sendSMS(){
       let celno = document.querySelector('#celno').value;
-      axios.post(`/user/sendAuthSMS`, celno, {withCredentials: false})
-          .then(res => {
-            alert('인증번호가 발송되었습니다.');
-            authCode = res.data;
-          })
-          .catch(err => {
-            alert('ERROR');
-          })
+      if(celno == ''){
+        alert('연락처를 입력해주세요.');
+        return false;
+      } else[
+        axios.post(`/user/sendAuthSMS`, {celno: celno}, {withCredentials: false})
+            .then(res => {
+              alert('인증번호가 발송되었습니다.');
+              authCode = res.data;
+            })
+            .catch(err => {
+              alert('ERROR');
+            })
+      ]
     }
 
     //인증번호 확인
