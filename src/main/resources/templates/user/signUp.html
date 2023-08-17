@@ -7,14 +7,13 @@
   <title>RACCOON</title>
 
   <script>
-    let authCheck = false; // 인증번호 클릭여부
-    let idDupCheck = false; // 아이디 중복확인
+    let authCheck = false; // 인증번호 확인여부
     let authCode; // 인증번호
-    let idChk = /^[a-z0-9]{4,12}$/; // 아이디 정규식
+    let idDupCheck = false; // 아이디 중복확인
 
     //인증번호 전송
     function sendSMS(){
-      let celno = docuemnt.querySelector('#celno').value;
+      let celno = document.querySelector('#celno').value;
       axios.post(`/user/sendAuthSMS`, celno, {withCredentials: false})
           .then(res => {
             alert('인증번호가 발송되었습니다.');
@@ -23,17 +22,38 @@
           .catch(err => {
             alert('ERROR');
           })
-
     }
+
+    //인증번호 확인
+    function checkAuthCode(){
+      let inputAuthCode = document.getElementById('authcode');
+      authCheck = false;
+
+      if(inputAuthCode.value == ''){
+        alert('인증번호를 입력해주세요');
+        inputAuthCode.focus();
+        return false;
+      } 
+      if (authCode !== inputAuthCode.value){
+        alert('인증코드가 일치하지않습니다');
+        return false;
+      } 
+      if (authCode == inputAuthCode.value){
+        alert('인증코드가 확인되었습니다');
+        authCheck = true;
+      }
+    }
+
 
     //아이디 중복확인
     function checkDup(){
-      let userId = document.querySelector('#userid').value;
+      let userId = document.getElementById('userid');
+      let idChk = /^[a-z0-9]{4,12}$/;
 
-      if(userId === ''){
+      if(userId.value === ''){
         alert('아이디를 입력해주세요.');
         return false;
-      } else if (!idChk.test(userId)){
+      } else if (!idChk.test(userId.value)){
         alert('아이디는 4~12자리 영문 소문자, 숫자 조합으로 사용해주세요');
         userId.focus();
         return false;
@@ -41,7 +61,7 @@
         axios.get(`/user/selectUseridAxios`,
             {
               params: {
-                userid: userId
+                userid: userId.value
               }
             },
             {withCredentials: false})
@@ -65,7 +85,6 @@
     //회원가입 유효성검사
     function checkVal(){
       if(confirm('가입하시겠습니까?')){
-        //지현연습
         let userId = document.getElementById('userid');
         let password = document.getElementById('password');
         let rePassword = document.getElementById('repassword');
@@ -76,6 +95,7 @@
         let passwordChk = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$~!@%*#^?&\(\)\-_=+]).{8,12}$/;
         let nameChk = /^[가-힘a-zA-Z]{2,}$/;
         let nickChk = /^[가-힘a-zA-Z]{1,10}$/;
+        let idChk = /^[a-z0-9]{4,12}$/;
 
         if(userId.value == ''){
           alert('아이디를 입력해주세요');
@@ -221,7 +241,7 @@
                     <p class="obTitle">연락처</p>
                     <div class="form-outline flex-fill mb-0">
                       <input type="text" th:field="*{celno}" class="form-control-raccoon" placeholder="- 제외하고 입력" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" maxlength="15">
-                      <button class="btn20" type="button">인증번호 받기</button>
+                      <button class="btn20" type="button" onclick="sendSMS();">인증번호 받기</button>
                     </div>
                   </div>
                   
@@ -229,7 +249,7 @@
                     <p class="obTitle">인증번호</p>
                     <div class="form-outline flex-fill mb-0">
                       <input type="text" id="authcode" name="authcode" class="form-control-raccoon" maxlength="6">
-                      <button class="btn20" type="button">인증번호 확인</button>
+                      <button class="btn20" type="button" onclick="checkAuthCode();">인증번호 확인</button>
                     </div>
                   </div>
 
