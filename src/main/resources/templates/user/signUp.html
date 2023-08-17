@@ -169,6 +169,11 @@
           nickname.focus();
           return false;
         }
+        if(!nicknameDupCheck){
+          alert('닉네임 중복을 확인해주세요.');
+          nickname.focus();
+          return false;
+        }
         if(celNo.value == ''){
           alert('연락처를 입력해주세요');
           celNo.focus();
@@ -201,12 +206,16 @@
             },
             {withCredentials: false})
             .then(res => {
+              $('#nickNameDupMsg').removeClass('success');
+              $('#nickNameDupMsg').removeClass('fail');
               if(res.data == null || res.data == ''){
                 nicknameDupCheck = true;
-                $('#nickNameDupMsg').html('사용가능한 닉네임입니다.');
+                $('#nickNameDupMsg').html('사용 가능한 닉네임 입니다.');
+                $('#nickNameDupMsg').addClass('success');
               } else{
                 nicknameDupCheck = false;
-                $('#nickNameDupMsg').html('<span style="color:red;">이미 존재하는 닉네임입니다.<span>');
+                $('#nickNameDupMsg').html('이미 존재하는 닉네임 입니다');
+                $('#nickNameDupMsg').addClass('fail');
               }
             })
             .catch(err => {
