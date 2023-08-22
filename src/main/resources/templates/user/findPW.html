@@ -1,10 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <meta charset="UTF-8"/>
+  <th:block th:replace="fragment/defaultSet :: defaultSetFragment"></th:block>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    let authCode; // 인증코드
+
+    window.onload = function(){
+      $('#userid').focus();
+    };
+
+    function sendSMS() {
+      let userid = document.querySelector('#userid').value;
+      let celno = document.querySelector('#celno').value;
+
+      if(userid === ''){
+        alert('아이디를 입력해주세요.');
+        $('#userid').focus();
+        return false;
+      } else if(celno === ''){
+        alert('연락처를 입력해주세요.');
+        $('#celno').focus();
+        return false;
+      } else {
+        axios.get(`/user/selectUserinfoByUseridAndCelno`, { // axios get 요청으로 유저 정보 조회
+          params: { // 파라미터로 객체 전송
+            userid: userid,
+            celno: celno
+          }
+        })
+            .then(res => { // 응답값 받는 경우
+              if (res.data.resultVal === 'Null') { // responseDTO의 resultVal에 결과 string 담아옴
+                alert('아이디 또는 연락처가 일치하지 않습니다.');
+                return false;
+              } else {
+                sendAuthCodeSMS(celno, data => { //celno를 파라미터로 넘기고 data 결과를 받는 콜백 함수 실행
+                      authCode = data
+                    }
+                ); // common.js 파일 메소드 사용
+              }
+            })
+            .catch(err => { console.log(err);
+              //alert('ERROR');
+              console.log(err);
+            })
+      }
+    }
+
+    //인증번호 확인
+    function checkAuthCode(){
+      let inputAuthCode = document.getElementById('authcode');
+      authCheck = false;
+
+      if(inputAuthCode.value == ''){
+        alert('인증번호를 입력해주세요');
+        inputAuthCode.focus();
+        return false;
+      }
+      if (authCode !== inputAuthCode.value){
+        alert('인증번호가 일치하지않습니다');
+        return false;
+      }
+      if (authCode === inputAuthCode.value){
+        document.querySelector('#auth_div').after(
+            ' <div class="object">\n' +
+            '                    <p class="obTitle">패스워드</p>\n' +
+            '                    <div class="form-outline flex-fill mb-0">\n' +
+            '                      <input type="password" th:field="*{password}" class="form-control" placeholder="8~12자리 영문+숫자+특수문자 조합" maxlength="12"/>\n' +
+            '                    </div>\n' +
+            '                  </div>\n' +
+            '\n' +
+            '                  <div class="object">\n' +
+            '                    <div class="form-outline flex-fill mb-0">\n' +
+            '                      <input type="password" id="repassword" name="repassword" class="form-control" placeholder="패스워드 확인" maxlength="12"/> \n' +
+            '                    </div>\n' +
+            '                    <p class="info">* 특수문자는 $~!@%*#^?&()-_=+ 만 사용가능합니다.</p>\n' +
+            '                  </div>'
+        )
+      }
+    }
+
+  </script>
 </head>
 <body>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-11">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1 signuppage">
+                <div class="signHeader">
+                  <a href="/">
+                    <img class="logo singlogo" src="/img/common/logo/Raccoon_org.png">
+                  </a>
+                </div>
+                <div class="newpage">
+                  <div class="object">
+                    <p class="obTitle">아이디</p>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" id="userid" class="form-control-raccoon" maxlength="12">
+                    </div>
 
+                    <div id="result_div"></div>
+                  </div>
+
+                  <div class="object">
+                    <p class="obTitle">연락처</p>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" id="celno" class="form-control-raccoon" placeholder="- 제외하고 입력" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" maxlength="15">
+                      <button class="btn20" type="button" onclick="sendSMS();">인증번호 받기</button>
+                    </div>
+                  </div>
+
+                  <div class="object" id="auth_div">
+                    <p class="obTitle">인증번호</p>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" id="authcode" name="authcode" class="form-control-raccoon" maxlength="6">
+                      <button class="btn20" type="button" onclick="checkAuthCode();">인증번호 확인</button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <span><a href="./signUpList">회원가입</a></span>
+                    <span><a href="./login">로그인</a></span>
+                    <span><a href="./findPw">비밀번호 찾기</a></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--<p>ID :: <span th:text="${id}"></span></p>-->
+<!--<p>test code</p>-->
 </body>
 </html>

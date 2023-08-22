@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "user")
@@ -89,10 +90,10 @@ public class UserController {
 
   /**
    * 아이디, 패스워드로 회원존재여부 조회
-   * @param Userinfo
-   * @param request
-   * @param response
-   * @param model
+   * @param Userinfo to
+   * @param HttpServletRequest request
+   * @param HttpServletResponse response
+   * @param ModelMap model
    * @return ResponseDTO
    */
   @GetMapping("loginAxios")
@@ -110,15 +111,82 @@ public class UserController {
     return "/index";
   }
 
+  /**
+   * axios요청 - 아이디
+   * @param String userid
+   * @return String
+   * @throws Exception
+   */
   @GetMapping("selectUseridAxios")
   @ResponseBody
   public String selectUseridAxios(String userid, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
-    return userService.selectUserid(userid);
+    return userService.selectUseridByUserid(userid);
   }
 
+  /**
+   * axios요청 - 아이디
+   * @param String userid
+   * @return String
+   * @throws Exception
+   */
   @GetMapping("selectNicknameAxios")
   @ResponseBody
   public String selectNicknameAxios(String nickname, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
-    return userService.selectNickname(nickname);
+    return userService.selectNicknameByNickname(nickname);
   }
+
+  /**
+   * ID찾기 페이지
+   * @param HttpServletRequest request
+   * @param HttpServletResponse response
+   * @param ModelMap model
+   * @return String
+   * @throws Exception
+   */
+  @GetMapping("findId")
+  public String findId(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
+    return "user/findID";
+  }
+
+  /**
+   * PW찾기 페이지
+   * @param HttpServletRequest request
+   * @param HttpServletResponse response
+   * @param ModelMap model
+   * @return String
+   * @throws Exception
+   */
+  @GetMapping("findPw")
+  public String findPw(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
+    return "user/findPw";
+  }
+
+  /**
+   * axios요청 - userinfo 조회
+   * @param String celno
+   * @return String
+   * @throws Exception
+   */
+  @GetMapping("selectUserinfoList")
+  @ResponseBody
+  public List<Userinfo> selectUserinfoList(String celno, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
+    return userService.selectUserinfoListByCelno(celno);
+  }
+
+
+  /**
+   * userid, celno 정보로 유저 조회
+   * @param String userid
+   * @param String celno
+   * @param HttpServletRequest request
+   * @param HttpServletResponse response
+   * @param ModelMap model
+   * @return ResponseDTO
+   */
+  @GetMapping("selectUserinfoByUseridAndCelno")
+  @ResponseBody
+  public ResponseDTO selectUserinfoByUseridAndCelno(String userid, String celno, HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    return userService.selectUserinfoByUseridAndCelno(userid, celno);
+  }
+
 }

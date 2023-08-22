@@ -5,7 +5,7 @@
   <th:block th:replace="fragment/defaultSet :: defaultSetFragment"></th:block>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
-    $(document).ready(function () {
+    window.onload = function() {
       $('#userid, #password').on('keypress', function (e) {
         if (e.keyCode === 13) {
           login();
@@ -13,7 +13,7 @@
       });
 
       $('#userid').focus();
-    });
+    };
 
     function login() {
       if ($('#userid').val() === '') {
@@ -28,14 +28,14 @@
         const userid = $('#userid').val();
         const password = $('#password').val();
 
-        axios.get(`/user/loginAxios`,{
-            params: {
+        axios.get(`/user/loginAxios`,{ // axios get 요청으로 로그인 정보 조회
+            params: { // 파라미터로 객체 전송
               userid: userid,
               password: password
             }
         })
-            .then(res => {
-              if (res.data.resultVal === 'UserNull') {
+            .then(res => { // 응답값 받는 경우
+              if (res.data.resultVal === 'UserNull') { // responseDTO의 resultVal에 결과 string 담아옴
                 alert('아이디 또는 비밀번호가 일치하지 않습니다.');
                 return false;
               } else {
@@ -90,8 +90,8 @@
                     </div>
                     <div>
                       <span><a href="./signUpList">회원가입</a></span>
-                      <span><a href="#none">아이디 찾기</a></span>
-                      <span><a href="#none">비밀번호 찾기</a></span>
+                      <span><a href="./findId">아이디 찾기</a></span>
+                      <span><a href="./findPw">비밀번호 찾기</a></span>
                     </div>
                   </form>
                 </div>

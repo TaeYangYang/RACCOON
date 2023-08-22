@@ -5,6 +5,7 @@ import com.mycom.raccoon.entity.Userinfo;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface UserService {
 
@@ -50,7 +51,7 @@ public interface UserService {
    * @throws Exception
    */
   @Transactional(readOnly = true)
-  public String selectUserid(String userid) throws Exception;
+  public String selectUseridByUserid(String userid) throws Exception;
 
   /**
    * 닉네임 존재여부 조회
@@ -58,5 +59,22 @@ public interface UserService {
    * @return String
    */
   @Transactional(readOnly = true)
-  public String selectNickname(String nickname) throws Exception;
+  public String selectNicknameByNickname(String nickname) throws Exception;
+
+  /**
+   * Userinfo 리스트 조회
+   * @param String celno
+   * @return List<Userinfo>
+   */
+  @Transactional(readOnly = true)
+  public List<Userinfo> selectUserinfoListByCelno(String celno);
+
+  /**
+   * userid, celno 정보로 유저 조회
+   * @param String userid
+   * @param String celno
+   * @return
+   */
+  @Transactional(readOnly = true)
+  public ResponseDTO selectUserinfoByUseridAndCelno(String userid, String celno);
 }

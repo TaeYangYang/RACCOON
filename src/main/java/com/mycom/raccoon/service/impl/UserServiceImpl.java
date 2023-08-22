@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional(readOnly = true)
-  public String selectUserid(String userid) throws Exception{
+  public String selectUseridByUserid(String userid) throws Exception{
     if(userid == null || userid.isEmpty()){
       throw new Exception(); // 파라미터가 넘어오지 않는 경우
     }
@@ -85,7 +86,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public String selectNickname(String nickname) throws Exception{
+  public String selectNicknameByNickname(String nickname) throws Exception{
     if(nickname == null || nickname.isEmpty()){
       throw new Exception(); // 파라미터가 넘어오지 않는 경우
     }
@@ -96,5 +97,23 @@ public class UserServiceImpl implements UserService {
     } else{
       return userinfo.getNickname();
     }
+  }
+
+  @Override
+  public List<Userinfo> selectUserinfoListByCelno(String celno) {
+    return userRepository.findByCelnoOrderByUserid(celno);
+  }
+
+  @Override
+  public ResponseDTO selectUserinfoByUseridAndCelno(String userid, String celno) {
+    Userinfo userinfo = userRepository.findByUseridAndCelno(userid, celno);
+    ResponseDTO responseDTO = new ResponseDTO();
+    if(userinfo == null){
+      responseDTO.setResultVal("Null");
+    } else{
+      responseDTO.setResultVal("NotNull");
+    }
+
+    return responseDTO;
   }
 }
