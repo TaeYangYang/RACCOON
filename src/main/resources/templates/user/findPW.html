@@ -24,7 +24,7 @@
         $('#celno').focus();
         return false;
       } else {
-        axios.get(`/user/selectUserinfoByUseridAndCelno`, { // axios get 요청으로 유저 정보 조회
+        axios.get(`/user/selectUserByUseridAndCelno`, { // axios get 요청으로 유저 정보 조회
           params: { // 파라미터로 객체 전송
             userid: userid,
             celno: celno
@@ -63,21 +63,63 @@
         return false;
       }
       if (authCode === inputAuthCode.value){
-        document.querySelector('#auth_div').after(
-            ' <div class="object">\n' +
-            '                    <p class="obTitle">패스워드</p>\n' +
-            '                    <div class="form-outline flex-fill mb-0">\n' +
-            '                      <input type="password" th:field="*{password}" class="form-control" placeholder="8~12자리 영문+숫자+특수문자 조합" maxlength="12"/>\n' +
-            '                    </div>\n' +
-            '                  </div>\n' +
+        document.getElementById("userid").readOnly = true;        // readonly 처리
+        document.getElementById("celno").readOnly = true;
+        document.getElementById("authcode").readOnly = true;
+        alert('확인되었습니다.');
+        $('#auth_div').after( // 패스워드 변경하는 텍스트박스 표시
+            '<div class="object">\n' +
+            '   <p class="obTitle">패스워드 변경</p>\n' +
+            '   <div class="form-outline flex-fill mb-0">\n' +
+            '     <input type="password" id="password" name="password" class="form-control" placeholder="8~12자리 영문+숫자+특수문자 조합" maxlength="12"/>\n' +
+            '   </div>\n' +
+            '</div>\n' +
             '\n' +
-            '                  <div class="object">\n' +
-            '                    <div class="form-outline flex-fill mb-0">\n' +
-            '                      <input type="password" id="repassword" name="repassword" class="form-control" placeholder="패스워드 확인" maxlength="12"/> \n' +
-            '                    </div>\n' +
-            '                    <p class="info">* 특수문자는 $~!@%*#^?&()-_=+ 만 사용가능합니다.</p>\n' +
-            '                  </div>'
+            '<div class="object">\n' +
+            '  <div class="form-outline flex-fill mb-0">\n' +
+            '    <input type="password" id="repassword" name="repassword" class="form-control" placeholder="패스워드 확인" maxlength="12"/> \n' +
+            '  </div>\n' +
+            '  <p class="info">* 특수문자는 $~!@%*#^?&()-_=+ 만 사용가능합니다.</p>\n' +
+            '</div>' +
+            '<button class="btn20" type="button" onclick="modifyPassword();">패스워드 변경</button>'
         )
+      }
+    }
+
+    function modifyPassword(){
+      let userid = document.getElementById('userid');
+      let passwordChk = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$~!@%*#\^?&\(\)\-_=+]).{8,12}$/; // 패스워드 정규식
+      let password = document.getElementById('password');
+      let rePassword = document.getElementById('repassword');
+
+      if(!passwordChk.test(password.value)){
+        alert('패스워드는 8~12자리 영문+숫자+특수문자 조합으로 사용해주세요');
+        password.focus();
+        return false;
+      }
+      if(password.value !== rePassword.value){
+        alert('패스워드와 패스워드 확인이 일치하지 않습니다.');
+        rePassword.focus();
+        return false;
+      }
+      if(confirm('패스워드를 변경하시겠습니까?')){
+        // axios put 요청으로 수정, 파라미터 : (url, parameter, config)
+        axios.put(`/user/modifyPassword`, {
+          userid: userid.value,
+          password: password.value
+        })
+            .then(res => { // 응답 받는경우
+              if(res.data.resultVal === 'Success'){
+                alert('정상처리되었습니다.');
+                location.href = '/';
+              } else{
+                alert('ERROR');
+              }
+            })
+            .catch(err => { // 에러처리
+              console.log(err);
+              alert('ERROR');
+            })
       }
     }
 
@@ -101,7 +143,7 @@
                   <div class="object">
                     <p class="obTitle">아이디</p>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="userid" class="form-control-raccoon" maxlength="12">
+                      <input type="text" id="userid" name="userid" class="form-control-raccoon" maxlength="12">
                     </div>
 
                     <div id="result_div"></div>
@@ -110,7 +152,7 @@
                   <div class="object">
                     <p class="obTitle">연락처</p>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="celno" class="form-control-raccoon" placeholder="- 제외하고 입력" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" maxlength="15">
+                      <input type="text" id="celno" name="celno" class="form-control-raccoon" placeholder="- 제외하고 입력" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" maxlength="15">
                       <button class="btn20" type="button" onclick="sendSMS();">인증번호 받기</button>
                     </div>
                   </div>

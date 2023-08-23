@@ -1,43 +1,45 @@
 package com.mycom.raccoon.repository;
 
-import com.mycom.raccoon.entity.Userinfo;
+import com.mycom.raccoon.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<Userinfo, Integer> {
+@Repository
+public interface UserRepository extends JpaRepository<User, Integer> {
   /**
-   * Userinfo 조회
+   * User 조회
    * @param String userid
-   * @return Userinfo
+   * @return User
    */
-  public Userinfo findByUserid(String userid);
+  public User findByUserid(String userid);
 
   /**
-   * Userinfo 전체 리스트 조회
-   * @return List<Userinfo>
+   * User 전체 리스트 조회
+   * @return List<User>
    */
-  public List<Userinfo> findAll();
+  public List<User> findAll();
 
   /**
-   * Userinfo 조회
+   * User 조회
    * @param String nickname
-   * @return Userinfo
+   * @return User
    */
-  public Userinfo findByNickname(String nickname);
+  public User findByNickname(String nickname);
 
   /**
-   * Userinfo 리스트 조회
+   * User 리스트 조회
    * @param String celno
-   * @return List<Userinfo>
+   * @return List<User>
    */
-  public List<Userinfo> findByCelnoOrderByUserid(String nickname);
+  public List<User> findByCelnoOrderByUserid(String nickname);
 
   /**
-   * userid, celno 사용해서 Userinfo 조회
+   * userid, celno 사용해서 User 조회
    * @param String userid
    * @param String celno
-   * @return Userinfo
+   * @return User
    */
-  public Userinfo findByUseridAndCelno(String userid, String celno);
+  public User findByUseridAndCelno(String userid, String celno);
 }

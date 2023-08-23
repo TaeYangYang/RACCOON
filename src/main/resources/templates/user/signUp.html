@@ -98,7 +98,7 @@
         let nickname = document.getElementById('nickname');
         let celNo = document.getElementById('celno');
         let authCode = document.getElementById('authcode');
-        let passwordChk = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$~!@%*#^?&\(\)\-_=+]).{8,12}$/;
+        let passwordChk = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$~!@%*#\^?&\(\)\-_=+]).{8,12}$/;
         let nameChk = /^[가-힘a-zA-Z]{2,}$/;
         let nickChk = /^[가-힘a-zA-Z]{1,10}$/;
         let idChk = /^[a-z0-9]{4,12}$/;
@@ -243,7 +243,7 @@
               </div>
 
               <div class="newpage">
-                <form id="signUpForm" class="" th:action="@{signUpPost}" th:method="post" th:object="${userinfo}">
+                <form id="signUpForm" class="" th:action="@{signUpPost}" th:method="post" th:object="${user}">
 
                   <div class="object">
                     <p class="obTitle">아이디</p>

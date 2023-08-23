@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +19,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "USER_TB")
 @NoArgsConstructor
-public class Userinfo {
+@DynamicUpdate
+public class User {
 
   @Id
   @Column(name = "user_id")
@@ -36,6 +39,7 @@ public class Userinfo {
   @CreationTimestamp
   private LocalDateTime inptdttm;
   @Column(name = "updt_dttm")
+  @UpdateTimestamp
   private LocalDateTime updtdttm;
   @NotNull
   private String nickname;

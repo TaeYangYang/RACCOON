@@ -2,13 +2,12 @@ package com.mycom.raccoon.controller.user;
 
 import com.mycom.raccoon.common.UtilClass;
 import com.mycom.raccoon.entity.ResponseDTO;
-import com.mycom.raccoon.entity.Userinfo;
+import com.mycom.raccoon.entity.User;
 import com.mycom.raccoon.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,19 +21,13 @@ import java.util.List;
 @PropertySource("classpath:/properties/key.properties")
 public class UserController {
 
-  //private DefaultMessageService messageService;
-
   private final UserService userService;
 
   private final Environment environment;
 
-//  @Autowired
-//  public UserController(@Value("#{keyPropertiesFactoryBean['coolsms.key']}")String coolsmsKey,
-//                        @Value("#{keyPropertiesFactoryBean['coolsms.secret']}")String coolsmsSecret) {
-//    // 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
-//    this.messageService = NurigoApp.INSTANCE.initialize(coolsmsKey, coolsmsSecret, "https://api.coolsms.co.kr");
-//  }
-
+  /**
+   * 로그인 리스트 화면
+   */
   @GetMapping("signUpList")
   public String selectReg(HttpServletRequest request, HttpServletResponse response, ModelMap model){
 
@@ -43,22 +36,36 @@ public class UserController {
 
   /**
    * 회원가입 페이지 진입
-   * @param userinfo
-   * @param request
-   * @param response
-   * @param model
+   * @param User user
+   * @param HttpServletRequest request
+   * @param HttpServletResponse response
+   * @param ModelMap model
    * @return String view
    */
   @GetMapping("signUp")
-  public String signUp(Userinfo userinfo, HttpServletRequest request, HttpServletResponse response, Model model) {
-    model.addAttribute("userinfo", userinfo);
+  public String signUp(User user, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+    model.addAttribute("user", user);
     return "user/signUp";
   }
 
+  /**
+   * 회원가입(유저 정보 insert)
+   * @param User to
+   * @param HttpServletRequest request
+   * @param HttpServletResponse response
+   * @param ModelMap model
+   * @return String
+   */
   @PostMapping("signUpPost")
-  public String signUpPost(Userinfo to, HttpServletRequest request, HttpServletResponse response, ModelMap model){
-    userService.insertUserinfo(to);
-    model.addAttribute("userinfo", to);
+  public String signUpPost(User to, HttpServletRequest request, HttpServletResponse response, ModelMap model){
+
+    //캐시 무효화
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+
+    userService.insertUser(to);
+    model.addAttribute("user", to);
     return "user/signUpFinish";
   }
 
@@ -84,13 +91,13 @@ public class UserController {
    */
   @GetMapping("login")
   public String login(HttpServletRequest request, HttpServletResponse response, ModelMap model){
-    model.addAttribute("userinfo", new Userinfo());
+    model.addAttribute("user", new User());
     return "user/login";
   }
 
   /**
    * 아이디, 패스워드로 회원존재여부 조회
-   * @param Userinfo to
+   * @param User to
    * @param HttpServletRequest request
    * @param HttpServletResponse response
    * @param ModelMap model
@@ -98,7 +105,7 @@ public class UserController {
    */
   @GetMapping("loginAxios")
   @ResponseBody
-  public ResponseDTO loginAxios(Userinfo to, HttpServletRequest request, HttpServletResponse response, ModelMap model){
+  public ResponseDTO loginAxios(User to, HttpServletRequest request, HttpServletResponse response, ModelMap model){
     return userService.selectLogin(request, to);
   }
 
@@ -162,15 +169,15 @@ public class UserController {
   }
 
   /**
-   * axios요청 - userinfo 조회
+   * axios요청 - user 조회
    * @param String celno
    * @return String
    * @throws Exception
    */
-  @GetMapping("selectUserinfoList")
+  @GetMapping("selectUserList")
   @ResponseBody
-  public List<Userinfo> selectUserinfoList(String celno, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
-    return userService.selectUserinfoListByCelno(celno);
+  public List<User> selectUserList(String celno, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
+    return userService.selectUserListByCelno(celno);
   }
 
 
@@ -183,10 +190,21 @@ public class UserController {
    * @param ModelMap model
    * @return ResponseDTO
    */
-  @GetMapping("selectUserinfoByUseridAndCelno")
+  @GetMapping("selectUserByUseridAndCelno")
   @ResponseBody
-  public ResponseDTO selectUserinfoByUseridAndCelno(String userid, String celno, HttpServletRequest request, HttpServletResponse response, ModelMap model){
-    return userService.selectUserinfoByUseridAndCelno(userid, celno);
+  public ResponseDTO selectUserByUseridAndCelno(String userid, String celno, HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    return userService.selectUserByUseridAndCelno(userid, celno);
+  }
+
+  @PutMapping("modifyPassword")
+  @ResponseBody
+  public ResponseDTO modifyPassword(@RequestBody User to, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
+    //캐시 무효화
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+
+    return userService.updateUser(to);
   }
 
 }

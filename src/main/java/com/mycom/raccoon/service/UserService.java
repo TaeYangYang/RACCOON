@@ -1,7 +1,7 @@
 package com.mycom.raccoon.service;
 
 import com.mycom.raccoon.entity.ResponseDTO;
-import com.mycom.raccoon.entity.Userinfo;
+import com.mycom.raccoon.entity.User;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,25 +12,25 @@ public interface UserService {
 
   /**
    * 회원정보 입력
-   * @param Userinfo to
+   * @param User to
    */
-  public void insertUserinfo(Userinfo to);
+  public void insertUser(User to);
 
   /**
    * 회원여부 조회하여 로그인 프로세스 작동
    * @param HttpServletRequest request
-   * @param Userinfo to
+   * @param User to
    * @return ResponseDTO
    */
   @Transactional(readOnly = true)
-  public ResponseDTO selectLogin(HttpServletRequest request, Userinfo to);
+  public ResponseDTO selectLogin(HttpServletRequest request, User to);
 
   /**
    * 로그인 후 기본 세션 값 설정
    * @param HttpServletRequest request
-   * @param Userinfo userinfo
+   * @param User user
    */
-  public void setSession(HttpServletRequest request, Userinfo userinfo);
+  public void setSession(HttpServletRequest request, User user);
 
   /**
    * 로그아웃 처리
@@ -62,12 +62,12 @@ public interface UserService {
   public String selectNicknameByNickname(String nickname) throws Exception;
 
   /**
-   * Userinfo 리스트 조회
+   * User 리스트 조회
    * @param String celno
-   * @return List<Userinfo>
+   * @return List<User>
    */
   @Transactional(readOnly = true)
-  public List<Userinfo> selectUserinfoListByCelno(String celno);
+  public List<User> selectUserListByCelno(String celno);
 
   /**
    * userid, celno 정보로 유저 조회
@@ -76,5 +76,13 @@ public interface UserService {
    * @return
    */
   @Transactional(readOnly = true)
-  public ResponseDTO selectUserinfoByUseridAndCelno(String userid, String celno);
+  public ResponseDTO selectUserByUseridAndCelno(String userid, String celno);
+
+  /**
+   * 패스워드 변경
+   * @param User to
+   * @return ResponseDTO
+   */
+  @Transactional(rollbackFor = Exception.class)
+  ResponseDTO updateUser(User to);
 }

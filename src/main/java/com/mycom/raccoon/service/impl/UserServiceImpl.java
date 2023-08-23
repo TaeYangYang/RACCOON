@@ -1,7 +1,7 @@
 package com.mycom.raccoon.service.impl;
 
 import com.mycom.raccoon.entity.ResponseDTO;
-import com.mycom.raccoon.entity.Userinfo;
+import com.mycom.raccoon.entity.User;
 import com.mycom.raccoon.repository.UserRepository;
 import com.mycom.raccoon.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,21 +23,21 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional
-  public void insertUserinfo(Userinfo to){
+  public void insertUser(User to){
     to.setPassword(passwordEncoder.encode(to.getPassword()));
     userRepository.save(to);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public ResponseDTO selectLogin(HttpServletRequest request, Userinfo to){
+  public ResponseDTO selectLogin(HttpServletRequest request, User to){
     ResponseDTO responseDTO = new ResponseDTO();
-    Userinfo userinfo = userRepository.findByUserid(to.getUserid());
+    User user = userRepository.findByUserid(to.getUserid());
 
-    if(userinfo == null || !to.getUserid().equals(userinfo.getUserid()) || !passwordEncoder.matches(to.getPassword(), userinfo.getPassword())){
+    if(user == null || !to.getUserid().equals(user.getUserid()) || !passwordEncoder.matches(to.getPassword(), user.getPassword())){
       responseDTO.setResultVal("UserNull");
     } else{
-      setSession(request, userinfo);
+      setSession(request, user);
       responseDTO.setResultVal("Success");
     }
 
@@ -45,13 +45,13 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void setSession(HttpServletRequest request, Userinfo userinfo) {
+  public void setSession(HttpServletRequest request, User user) {
     HttpSession session = request.getSession();
 
-    session.setAttribute("userid", userinfo.getUserid()); // 아이디
-    session.setAttribute("username", userinfo.getUsername()); // 유저명
-    session.setAttribute("celno", userinfo.getCelno()); // 연락처
-    session.setAttribute("nickname", userinfo.getNickname()); // 닉네임
+    session.setAttribute("userid", user.getUserid()); // 아이디
+    session.setAttribute("username", user.getUsername()); // 유저명
+    session.setAttribute("celno", user.getCelno()); // 연락처
+    session.setAttribute("nickname", user.getNickname()); // 닉네임
 
   }
 
@@ -76,12 +76,12 @@ public class UserServiceImpl implements UserService {
     if(userid == null || userid.isEmpty()){
       throw new Exception(); // 파라미터가 넘어오지 않는 경우
     }
-    Userinfo userinfo = userRepository.findByUserid(userid);
+    User user = userRepository.findByUserid(userid);
     //아이디 존재하는지 조회해서 리턴
-    if(userinfo == null){
+    if(user == null){
       return null;
     } else{
-      return userinfo.getUserid();
+      return user.getUserid();
     }
   }
 
@@ -90,28 +90,44 @@ public class UserServiceImpl implements UserService {
     if(nickname == null || nickname.isEmpty()){
       throw new Exception(); // 파라미터가 넘어오지 않는 경우
     }
-    Userinfo userinfo = userRepository.findByNickname(nickname);
+    User user = userRepository.findByNickname(nickname);
     //아이디 존재하는지 조회해서 리턴
-    if(userinfo == null){
+    if(user == null){
       return null;
     } else{
-      return userinfo.getNickname();
+      return user.getNickname();
     }
   }
 
   @Override
-  public List<Userinfo> selectUserinfoListByCelno(String celno) {
+  public List<User> selectUserListByCelno(String celno) {
     return userRepository.findByCelnoOrderByUserid(celno);
   }
 
   @Override
-  public ResponseDTO selectUserinfoByUseridAndCelno(String userid, String celno) {
-    Userinfo userinfo = userRepository.findByUseridAndCelno(userid, celno);
+  public ResponseDTO selectUserByUseridAndCelno(String userid, String celno) {
+    User user = userRepository.findByUseridAndCelno(userid, celno);
     ResponseDTO responseDTO = new ResponseDTO();
-    if(userinfo == null){
+    if(user == null){
       responseDTO.setResultVal("Null");
     } else{
       responseDTO.setResultVal("NotNull");
+    }
+
+    return responseDTO;
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public ResponseDTO updateUser(User to){
+    ResponseDTO responseDTO = new ResponseDTO();
+    try{
+      User user = userRepository.findByUserid(to.getUserid());
+      user.setPassword(passwordEncoder.encode(to.getPassword()));
+      userRepository.save(user);
+      responseDTO.setResultVal("Success");
+    } catch(Exception e){
+      responseDTO.setResultVal("Fail");
     }
 
     return responseDTO;

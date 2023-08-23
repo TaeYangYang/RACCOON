@@ -16,13 +16,13 @@
         return false;
       } else {
         let celno = document.querySelector('#celno').value; // 연락처
-        axios.get(`/user/selectUserinfoList`,{ //axios get 요청 사용해서 유저정보 조회
+        axios.get(`/user/selectUserList`,{ //axios get 요청 사용해서 유저정보 조회
           params: {
             celno: celno // 요청 파라미터 : 연락처
           }
         })
             .then(res => {
-              let data = res.data; // 서버 요청 결과(Userinfo 객체 리스트)
+              let data = res.data; // 서버 요청 결과(User 객체 리스트)
               let resultDiv = document.querySelector('#result_div');
               resultDiv.innerHTML = '총 ' + res.data.length + '개의 아이디를 찾았습니다.';
 
