@@ -1,9 +1,9 @@
-package com.mycom.raccoon.service.impl;
+package com.mycom.raccoon.service.user.impl;
 
 import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.entity.User;
 import com.mycom.raccoon.repository.UserRepository;
-import com.mycom.raccoon.service.UserService;
+import com.mycom.raccoon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

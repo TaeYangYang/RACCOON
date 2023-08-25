@@ -1,4 +1,4 @@
-package com.mycom.raccoon.service;
+package com.mycom.raccoon.service.user;
 
 import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.entity.User;

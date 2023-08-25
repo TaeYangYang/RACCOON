@@ -1,9 +1,9 @@
 package com.mycom.raccoon.controller.user;
 
-import com.mycom.raccoon.common.UtilClass;
+import com.mycom.raccoon.common.Util;
 import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.entity.User;
-import com.mycom.raccoon.service.UserService;
+import com.mycom.raccoon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -77,10 +77,10 @@ public class UserController {
   public String sendAuthSMS(@RequestBody String celno, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
     String coolsmsKey = environment.getProperty("coolsms.key"); // sms발송 키
     String coolsmsSecret = environment.getProperty("coolsms.secret"); // sms발송 시크릿 키
-    String authCode = UtilClass.getRandomNumber(6); // 6자리 인증코드
+    String authCode = Util.getRandomNumber(6); // 6자리 인증코드
 
     //SMS 발송 메소드
-    //UtilClass.sendCoolSms(coolsmsKey, coolsmsSecret, "01041850434", celno, "RACCOON [인증번호] : " + authCode);
+    //Util.sendCoolSms(coolsmsKey, coolsmsSecret, "01041850434", celno, "RACCOON [인증번호] : " + authCode);
 
     //return authCode; // 인증코드 return
     return "000000";
@@ -196,6 +196,12 @@ public class UserController {
     return userService.selectUserByUseridAndCelno(userid, celno);
   }
 
+  /**
+   * 패스워드 변경
+   * @param User to
+   * @return ResponseDTO
+   * @throws Exception
+   */
   @PutMapping("modifyPassword")
   @ResponseBody
   public ResponseDTO modifyPassword(@RequestBody User to, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
