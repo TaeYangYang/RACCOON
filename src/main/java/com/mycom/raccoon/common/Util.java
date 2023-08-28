@@ -5,14 +5,15 @@ import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -77,7 +78,6 @@ public class Util {
     message.setText(text);
 
     SingleMessageSentResponse singleMessageSentResponse = messageService2.sendOne(new SingleMessageSendingRequest(message));
-    System.out.println(singleMessageSentResponse);
 
     return singleMessageSentResponse;
   }
@@ -88,57 +88,44 @@ public class Util {
    * @param Map<String, String> paramMap // 요청 파라미터
    * @return Strin
    */
-  public static String postConnection(String paramUrl, Map<String, String> paramMap) throws Exception {
-    if(nvl(paramUrl).isEmpty()){
-      throw new Exception();
-    }
-
-    URL url = new URL(paramUrl); // URL 설정
-    HttpURLConnection conn = (HttpURLConnection) url.openConnection(); // 커넥션
-
-    // 전송 모드 설정
-    conn.setDefaultUseCaches(false);
-    conn.setDoInput(true); // 서버에서 읽기
-    conn.setDoOutput(true); // 서버로 쓰기
-    conn.setRequestMethod("POST"); // 요청방식
-
-    // 헤더 설정
-    conn.setRequestProperty("content-type", "Content-type: application/x-www-form-urlencoded;charset=utf-8");
-
-    // 값 넘기기
-    StringBuffer buffer = new StringBuffer();
-
-    if(!paramMap.isEmpty()){
-      Set<String> key = paramMap.keySet();
-
-      for (Object obj : key) {
-        String keyName = (String) obj;
-        String valueName = paramMap.get(keyName);
-        buffer.append("&").append(keyName).append("=").append(valueName);
+  public static String postConnection(String paramUrl, Map<String, String> paramMap) {
+    try{
+      if(nvl(paramUrl).isEmpty()){
+        throw new Exception("URL is null!!");
       }
+
+      HttpHeaders headers = new HttpHeaders();
+      headers.add("Content-type", "Content-type: application/x-www-form-urlencoded;charset=utf-8");
+
+      MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+      if(!paramMap.isEmpty()){
+        Set<String> key = paramMap.keySet();
+        for (Object obj : key) {
+          String keyName = (String) obj;
+          String valueName = paramMap.get(keyName);
+
+          params.add(keyName, valueName);
+        }
+      }
+
+      RestTemplate restTemplate = new RestTemplate();
+      HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(params, headers);
+
+      ResponseEntity<String> response = restTemplate.exchange(
+              paramUrl,
+              HttpMethod.POST,
+              httpEntity,
+              String.class
+      );
+
+      // 응답
+      return response.getBody();
+
+    } catch(Exception e){
+      e.printStackTrace();
+      return null;
     }
-
-    OutputStreamWriter outStream = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
-
-    PrintWriter writer = new PrintWriter(outStream);
-    writer.write(buffer.toString());
-    writer.flush();
-
-    // 응답
-    int responseCode = conn.getResponseCode();
-    InputStreamReader inputReader = new InputStreamReader(conn.getInputStream(), "UTF-8");
-    BufferedReader bufferdReader = new BufferedReader(inputReader);
-
-    StringBuilder stringBuilder = new StringBuilder();
-    String str;
-
-    while((str = bufferdReader.readLine()) != null){
-      stringBuilder.append(str);
-    }
-    bufferdReader.close();
-
-    String response = stringBuilder.toString();
-    return response;
   }
 
 }

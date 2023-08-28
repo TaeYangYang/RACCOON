@@ -30,8 +30,7 @@ public class KakaoController {
    */
   @GetMapping("login")
   public RedirectView signUpKakao() throws Exception{
-
-    return new RedirectView();
+    return new RedirectView(kakaoService.getKakaoLogin());
   }
 
   /**
@@ -39,9 +38,9 @@ public class KakaoController {
    * @return
    * @throws Exception
    */
-  @GetMapping("kakao/callback")
+  @GetMapping("callback")
   public ResponseDTO callback(HttpServletRequest request, HttpServletResponse response) throws Exception{
-
+    kakaoService.getKakaoToken(request);
 
 
     return null;
