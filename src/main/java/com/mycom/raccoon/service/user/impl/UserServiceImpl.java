@@ -3,6 +3,7 @@ package com.mycom.raccoon.service.user.impl;
 import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.entity.User;
 import com.mycom.raccoon.repository.UserRepository;
+import com.mycom.raccoon.service.generic.impl.GenericServiceImpl;
 import com.mycom.raccoon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,24 +16,30 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends GenericServiceImpl<User> implements UserService{
 
   private final UserRepository userRepository;
 
   private final PasswordEncoder passwordEncoder;
 
   @Override
-  @Transactional
+  @Transactional(rollbackFor = Exception.class)
   public void insertUser(User to){
     to.setPassword(passwordEncoder.encode(to.getPassword()));
-    userRepository.save(to);
+    to.setSignupdiv("raccoon"); // 시스템 내에서 회원가입
+    try{
+      save(to);
+    } catch(Exception e){
+      e.printStackTrace();
+    }
   }
 
   @Override
   @Transactional(readOnly = true)
   public ResponseDTO selectLogin(HttpServletRequest request, User to){
     ResponseDTO responseDTO = new ResponseDTO();
-    User user = userRepository.findByUserid(to.getUserid());
+    String signupdiv = "raccoon";
+    User user = userRepository.findByUseridAndSignupdiv(to.getUserid(), signupdiv);
 
     if(user == null || !to.getUserid().equals(user.getUserid()) || !passwordEncoder.matches(to.getPassword(), user.getPassword())){
       responseDTO.setResultVal("UserNull");
@@ -76,7 +83,8 @@ public class UserServiceImpl implements UserService {
     if(userid == null || userid.isEmpty()){
       throw new Exception(); // 파라미터가 넘어오지 않는 경우
     }
-    User user = userRepository.findByUserid(userid);
+    String signupdiv = "raccoon";
+    User user = userRepository.findByUseridAndSignupdiv(userid, signupdiv);
     //아이디 존재하는지 조회해서 리턴
     if(user == null){
       return null;
@@ -121,8 +129,9 @@ public class UserServiceImpl implements UserService {
   @Transactional(rollbackFor = Exception.class)
   public ResponseDTO updateUser(User to){
     ResponseDTO responseDTO = new ResponseDTO();
+    String signupdiv = "raccoon";
     try{
-      User user = userRepository.findByUserid(to.getUserid());
+      User user = userRepository.findByUseridAndSignupdiv(to.getUserid(), signupdiv);
       user.setPassword(passwordEncoder.encode(to.getPassword()));
       userRepository.save(user);
       responseDTO.setResultVal("Success");

@@ -2,12 +2,13 @@ package com.mycom.raccoon.service.user;
 
 import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.entity.User;
+import com.mycom.raccoon.service.generic.GenericService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends GenericService<User> {
 
 
   /**

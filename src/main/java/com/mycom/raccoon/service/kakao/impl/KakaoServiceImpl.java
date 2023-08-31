@@ -1,6 +1,10 @@
 package com.mycom.raccoon.service.kakao.impl;
 
 import com.mycom.raccoon.common.Util;
+import com.mycom.raccoon.entity.ResponseDTO;
+import com.mycom.raccoon.entity.User;
+import com.mycom.raccoon.repository.UserRepository;
+import com.mycom.raccoon.service.generic.impl.GenericServiceImpl;
 import com.mycom.raccoon.service.kakao.KakaoService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -23,9 +27,11 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @PropertySource("classpath:/properties/key.properties")
-public class KakaoServiceImpl implements KakaoService {
+public class KakaoServiceImpl extends GenericServiceImpl implements KakaoService {
 
   private final Environment environment;
+
+  private final UserRepository userRepository;
 
   @Override
   public String getKakaoLogin() {
@@ -40,7 +46,7 @@ public class KakaoServiceImpl implements KakaoService {
 
   @Override
   @Transactional(rollbackFor = Exception.class)
-  public String getKakaoToken(HttpServletRequest request){
+  public ResponseDTO getKakaoToken(HttpServletRequest request){
 
     //로그인 요청에서 받아온 파라미터
     String code = Util.nvl(request.getParameter("code")); // 토큰 받기 요청에 필요한 인가 코드
@@ -71,11 +77,11 @@ public class KakaoServiceImpl implements KakaoService {
       if(!Util.nvl(responseStr).isEmpty()){
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(responseStr);
-        String id_token = (String) jsonObject.get("id_token");
+        String access_token = (String) jsonObject.get("access_token");
 
         //HttpHeader 생성
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + id_token);
+        headers.add("Authorization", "Bearer " + access_token);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         //HttpHeader 담기
@@ -97,13 +103,27 @@ public class KakaoServiceImpl implements KakaoService {
         long id = (long) jsonObj.get("id");
         String email = String.valueOf(kakao_account.get("email"));
         String nickname = String.valueOf(profile.get("nickname"));
+
+        // 받아온 정보로 회원가입 및 로그인 구현
+        User user = userRepository.findByUseridAndSignupdiv(email, "kakao");
+        if(user == null){
+          // 회원 정보 없으면 회원가입 처리
+          User insertUser = new User();
+          insertUser.setUserid(email);
+          insertUser.setUsername(nickname);
+          insertUser.setSignupdiv("kakao");
+          insertUser.setNickname(nickname);
+          save(insertUser);
+        }
+      } else{
+        // 응답데이터가 없는 경우
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setResultMsg("카카오 통신 에러");
+        return responseDTO;
       }
-
-      //TODO 받아온 정보로 회원가입 및 로그인 구현
-
-
     } catch(Exception e){
       e.printStackTrace();
+
     }
 
     return null;

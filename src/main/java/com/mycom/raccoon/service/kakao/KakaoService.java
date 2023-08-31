@@ -1,5 +1,7 @@
 package com.mycom.raccoon.service.kakao;
 
+import com.mycom.raccoon.entity.ResponseDTO;
+
 import javax.servlet.http.HttpServletRequest;
 
 public interface KakaoService {
@@ -11,9 +13,9 @@ public interface KakaoService {
   public String getKakaoLogin();
 
   /**
-   * 카카오 로그인 토큰 얻기
+   * 카카오 로그인 토큰 얻기, 회원가입 및 로그인 처리
    * @param HttpServletRequest request
-   * @return
+   * @return ResponseDTO
    */
-  String getKakaoToken(HttpServletRequest request);
+  public ResponseDTO getKakaoToken(HttpServletRequest request);
 }

@@ -95,7 +95,7 @@ public class Util {
       }
 
       HttpHeaders headers = new HttpHeaders();
-      headers.add("Content-type", "Content-type: application/x-www-form-urlencoded;charset=utf-8");
+      headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
       MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 

@@ -7,5 +7,6 @@ import lombok.Setter;
 @Setter
 public class ResponseDTO {
   String resultVal;
+  String resultMsg;
   String responseCode;
 }
