@@ -29,7 +29,7 @@ public class UserController {
    * 로그인 리스트 화면
    */
   @GetMapping("signUpList")
-  public String selectReg(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+  public String signUpList(HttpServletRequest request, HttpServletResponse response, ModelMap model){
 
     return "user/signUpList";
   }

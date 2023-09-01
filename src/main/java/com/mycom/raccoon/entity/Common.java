@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
-public class CommonEntity {
+public class Common {
 
   @Column(name = "inpt_dttm")
   @CreationTimestamp

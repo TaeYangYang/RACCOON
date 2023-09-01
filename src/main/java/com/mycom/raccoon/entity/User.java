@@ -20,7 +20,8 @@ import javax.persistence.*;
         initialValue = 1,
         allocationSize = 1
 )
-public class User extends CommonEntity{
+
+public class User extends Common {
 
   @Id
   @GeneratedValue(
