@@ -1,5 +1,6 @@
 package com.mycom.raccoon.controller.kakao;
 
+import com.mycom.raccoon.common.Util;
 import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.service.kakao.KakaoService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,11 +41,15 @@ public class KakaoController {
    * @throws Exception
    */
   @GetMapping("callback")
-  public ResponseDTO callback(HttpServletRequest request, HttpServletResponse response) throws Exception{
-    kakaoService.getKakaoToken(request);
-
-
-    return null;
+  public RedirectView callback(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws Exception{
+    ResponseDTO responseDTO = kakaoService.getKakaoToken(request);
+    redirectAttributes.addAttribute("resultVal", responseDTO.getResultVal());
+    redirectAttributes.addAttribute("resultMsg", responseDTO.getResultMsg());
+    if(Util.nvl(responseDTO.getResultVal()).isEmpty()){
+      return new RedirectView("/");
+    } else{
+      return new RedirectView("common/response");
+    }
   }
 
 }

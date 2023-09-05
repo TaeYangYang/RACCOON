@@ -6,6 +6,7 @@ import com.mycom.raccoon.entity.User;
 import com.mycom.raccoon.repository.UserRepository;
 import com.mycom.raccoon.service.generic.impl.GenericServiceImpl;
 import com.mycom.raccoon.service.kakao.KakaoService;
+import com.mycom.raccoon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -33,6 +34,8 @@ public class KakaoServiceImpl extends GenericServiceImpl implements KakaoService
 
   private final UserRepository userRepository;
 
+  private final UserService userService;
+
   @Override
   public String getKakaoLogin() {
     String url = environment.getProperty("kakao.login.auth.url"); // 카카오 로그인 요청 URL
@@ -47,6 +50,7 @@ public class KakaoServiceImpl extends GenericServiceImpl implements KakaoService
   @Override
   @Transactional(rollbackFor = Exception.class)
   public ResponseDTO getKakaoToken(HttpServletRequest request){
+    ResponseDTO responseDTO = new ResponseDTO();
 
     //로그인 요청에서 받아온 파라미터
     String code = Util.nvl(request.getParameter("code")); // 토큰 받기 요청에 필요한 인가 코드
@@ -115,17 +119,17 @@ public class KakaoServiceImpl extends GenericServiceImpl implements KakaoService
           insertUser.setNickname(nickname);
           save(insertUser);
         }
+
+        userService.setSession(request, userRepository.findByUseridAndSignupdiv(email, "kakao"));
       } else{
         // 응답데이터가 없는 경우
-        ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setResultMsg("카카오 통신 에러");
-        return responseDTO;
+        responseDTO.setResultVal("ERROR");
       }
     } catch(Exception e){
       e.printStackTrace();
-
     }
 
-    return null;
+    return responseDTO;
   }
 }
