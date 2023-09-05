@@ -196,3 +196,18 @@ ul.signinfo li.on a {
 .btn20:hover {
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.13);
 }
+
+.success {
+  display : block;
+  color: #2196F3;
+  font-size: 12px;
+  padding: 3px 0 3px 20px;
+  background-image: url(../img/common/icon/check.gif);
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+  background-position: left center;
+}
+
+.off {
+  display: none;
+}
