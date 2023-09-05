@@ -197,8 +197,11 @@
 
     function checkNicknameDup(obj){
       let nickname = obj.value;
+      
       if(nickname == ''){
         $('#nickNameDupMsg').html('');
+        $('#nickNameDupMsg').addClass('off');
+        $('#nickNameDupMsg').addClass('success');
       } else{
         // 서버에 axios 사용해서 닉네임 중복되는지 체크 요청
         axios.get(`/user/selectNicknameAxios`, // 요청 urL, get방식
@@ -209,16 +212,16 @@
             },
             {withCredentials: false})
             .then(res => { // promise 형식, 응답받음
-              $('#nickNameDupMsg').removeClass('success');
-              $('#nickNameDupMsg').removeClass('fail');
+              $('#nickNameDupMsg').addClass('off');
+              $('#nickNameDupMsg').addClass('success');
               if(res.data == null || res.data == ''){ // res객체애 응답 데이터 담아옴
                 nicknameDupCheck = true;
                 $('#nickNameDupMsg').html('사용 가능한 닉네임 입니다.');
-                $('#nickNameDupMsg').addClass('success');
+                $('#nickNameDupMsg').removeClass('off');
               } else{
                 nicknameDupCheck = false;
-                $('#nickNameDupMsg').html('이미 존재하는 닉네임 입니다');
-                $('#nickNameDupMsg').addClass('fail');
+                $('#nickNameDupMsg').addClass('off');
+                $('#nickNameDupMsg').removeClass('success');
               }
             })
             .catch(err => { // 에러 처리
@@ -292,7 +295,7 @@
                     <p class="obTitle">닉네임</p>
                     <div class="form-outline flex-fill mb-0">
                       <input type="text" th:field="*{nickname}" class="form-control" placeholder="1~10자리 영문,한글 사용" maxlength="10" onkeyup="checkNicknameDup(this);"/>
-                      <p id="nickNameDupMsg"></p>
+                      <p id="nickNameDupMsg" class="off"></p>
                     </div>
                   </div>
 
