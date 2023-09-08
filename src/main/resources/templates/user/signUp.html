@@ -264,7 +264,7 @@
                   <div class="object">
                     <p class="obTitle">아이디</p>
                     <div class="form-outline flex-fill mb-">
-                      <input type="text" th:field="*{userid}" class="form-control-raccoon" placeholder="4~12자리 영문 소문자, 숫자 사용" onchange="resetDupId();" maxlength="12"/>
+                      <input type="text" th:field="*{userid}" class="form-control-raccoon" placeholder="4~12자리 영문 소문자, 숫자 사용" oninput="resetDupId();" maxlength="12"/>
                       <button class="btn20" type="button" onclick="checkDup();">중복확인</button>
                     </div>
                     <p ID="idInfo" class="success off">사용 가능한 아이디 입니다</p>
@@ -294,7 +294,7 @@
                   <div class="object">
                     <p class="obTitle">닉네임</p>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" th:field="*{nickname}" class="form-control" placeholder="1~10자리 영문,한글 사용" maxlength="10" onkeyup="checkNicknameDup(this);"/>
+                      <input type="text" th:field="*{nickname}" class="form-control" placeholder="1~10자리 영문,한글 사용" maxlength="10" oninput="checkNicknameDup(this);"/>
                       <p id="nickNameDupMsg" class="off"></p>
                     </div>
                   </div>
@@ -302,7 +302,7 @@
                   <div class="object">
                     <p class="obTitle">연락처</p>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" th:field="*{celno}" class="form-control-raccoon" placeholder="- 제외하고 입력" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" onchange="resetAuthChek();" maxlength="15">
+                      <input type="text" th:field="*{celno}" class="form-control-raccoon" placeholder="- 제외하고 입력" oninput="this.value = this.value.replace(/[^0-9]/g,''); resetAuthChek();" maxlength="15">
                       <button class="btn20" type="button" onclick="sendSMS();">인증번호 받기</button>
                     </div>
                   </div>
@@ -310,7 +310,7 @@
                   <div class="object">
                     <p class="obTitle">인증번호</p>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="authcode" name="authcode" class="form-control-raccoon" onchange="resetAuthChek();" maxlength="6">
+                      <input type="text" id="authcode" name="authcode" class="form-control-raccoon" oninput="resetAuthChek();" maxlength="6">
                       <button class="btn20" type="button" onclick="checkAuthCode();">인증번호 확인</button>
                     </div>
                     <p id="authInfo" class="success off">인증번호 확인이 완료되었습니다</p>
