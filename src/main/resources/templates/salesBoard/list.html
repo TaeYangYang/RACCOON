@@ -10,53 +10,41 @@
   <title>RACCOON</title>
 </head>
 <body>
-<div class="container py-4">
-  <table class="table table-hover">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-    </tbody>
-  </table>
+  <main>
+    <section> <!--검색 영역-->
+      검색영역
+    </section>
+    <section> <!--리스트 영역-->
+      <ul>
+        <li>
+          <div class="imem-card">
+            <span class="cate">분류</span>
+            <a href="#">
+              <strong class="title">제목이 입력됩니다.</strong>
+              <i class="writer subtilte">김작성자</i>
+              <i class="date">0000-00-00</i>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </section> 
+    <section> <!--페이지 네비게이션 영역-->
+      <nav>
+        <ul>
+          <li>
+            <a href="#">이전</a>
+          </li>
+          <li><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li>
+            <a href="#">다음</a>
+          </li>
+        </ul>
+      </nav>
+    </section>
+  </main>
 
-  <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-      <li class="page-item disabled">
-        <a class="page-link">Previous</a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#">Next</a>
-      </li>
-    </ul>
-  </nav>
-</div>
 
-<!--<p>ID :: <span th:text="${id}"></span></p>-->
-<!--<p>test code</p>-->
 </body>
 </html>
