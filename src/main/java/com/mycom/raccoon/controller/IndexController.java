@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class IndexController {
 
-  @GetMapping("/")
+  @GetMapping(value={"/", "/index"})
   public String index(HttpServletRequest request, HttpServletResponse response, Model model) {
     model.addAttribute("id", "user");
     return "index";

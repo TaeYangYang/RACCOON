@@ -3,6 +3,7 @@ package com.mycom.raccoon.controller.kakao;
 import com.mycom.raccoon.common.Util;
 import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.service.kakao.KakaoService;
+import com.mycom.raccoon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -24,6 +25,8 @@ public class KakaoController {
   private final KakaoService kakaoService;
 
   private final Environment environment;
+
+  private final UserService userService;
 
   /**
    * 카카오 로그인 페이지 이동
@@ -48,8 +51,14 @@ public class KakaoController {
     if(Util.nvl(responseDTO.getResultVal()).isEmpty()){
       return new RedirectView("/");
     } else{
-      return new RedirectView("common/response");
+      return new RedirectView("/common/response");
     }
+  }
+
+  @GetMapping("logout/callback")
+  public RedirectView logoutCallback(HttpServletRequest request, HttpServletResponse response){
+    userService.getLogout(request);
+    return new RedirectView("/");
   }
 
 }

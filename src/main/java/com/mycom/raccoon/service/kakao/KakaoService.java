@@ -18,4 +18,11 @@ public interface KakaoService {
    * @return ResponseDTO
    */
   public ResponseDTO getKakaoToken(HttpServletRequest request);
+
+  /**
+   * 카카오 로그아웃 처리
+   * @param HttpServletRequest request
+   * @return String logoutURL
+   */
+  String getLogout(HttpServletRequest request);
 }

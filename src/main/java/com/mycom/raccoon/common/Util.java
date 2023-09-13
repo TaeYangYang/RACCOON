@@ -36,6 +36,16 @@ public class Util {
     }
   }
 
+  public static String nvl(Object args){
+    if(args == null){
+      return "";
+    } else if(args.toString().length() == 0){
+      return "";
+    } else{
+      return args.toString();
+    }
+  }
+
   /**
    * 랜덤 난수 생성
    * @param int 자릿수
@@ -115,6 +125,50 @@ public class Util {
       ResponseEntity<String> response = restTemplate.exchange(
               paramUrl,
               HttpMethod.POST,
+              httpEntity,
+              String.class
+      );
+
+      // 응답
+      return response.getBody();
+
+    } catch(Exception e){
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
+   * GET 요청 보내기
+   * @param String paramUrl // 요청 url
+   * @param Map<String, String> paramMap // 요청 파라미터
+   * @return Strin
+   */
+  public static String getConnection(String paramUrl, Map<String, String> paramMap) {
+    try{
+      if(nvl(paramUrl).isEmpty()){
+        throw new Exception("URL is null!!");
+      }
+
+      HttpHeaders headers = new HttpHeaders();
+      headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+      if(!paramMap.isEmpty()){
+        Set<String> key = paramMap.keySet();
+        for (Object obj : key) {
+          String keyName = (String) obj;
+          String valueName = paramMap.get(keyName);
+
+          paramUrl += "&" + keyName + "=" + valueName;
+        }
+      }
+
+      RestTemplate restTemplate = new RestTemplate();
+      HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(headers);
+
+      ResponseEntity<String> response = restTemplate.exchange(
+              paramUrl,
+              HttpMethod.GET,
               httpEntity,
               String.class
       );

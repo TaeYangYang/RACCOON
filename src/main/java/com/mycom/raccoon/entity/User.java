@@ -55,4 +55,7 @@ public class User extends Common {
   @Column(name = "signup_div")
   private String signupdiv; // 회원가입 구부(시스템 내 회원, 카카오, 네이버 ...)
 
+  @Transient
+  private String access_token; // 외부 로그인 토큰 값
+
 }

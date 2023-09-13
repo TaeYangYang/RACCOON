@@ -59,7 +59,8 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     session.setAttribute("username", user.getUsername()); // 유저명
     session.setAttribute("celno", user.getCelno()); // 연락처
     session.setAttribute("nickname", user.getNickname()); // 닉네임
-
+    session.setAttribute("signup_div", user.getSignupdiv()); // 회원가입경로 구분(카카오, 네이버, 라쿤 등...)
+    session.setAttribute("access_token", user.getAccess_token()); // 외부 로그인연동 토큰 값
   }
 
   @Override
@@ -75,6 +76,8 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     session.removeAttribute("username");
     session.removeAttribute("celno");
     session.removeAttribute("nickname");
+    session.removeAttribute("signup_div");
+    session.removeAttribute("access_token");
   }
 
   @Override
@@ -136,6 +139,7 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
       userRepository.save(user);
       responseDTO.setResultVal("Success");
     } catch(Exception e){
+      e.printStackTrace();
       responseDTO.setResultVal("Fail");
     }
 

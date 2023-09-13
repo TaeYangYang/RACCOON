@@ -22,6 +22,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -120,7 +121,9 @@ public class KakaoServiceImpl extends GenericServiceImpl implements KakaoService
           save(insertUser);
         }
 
-        userService.setSession(request, userRepository.findByUseridAndSignupdiv(email, "kakao"));
+        User sessionUser = userRepository.findByUseridAndSignupdiv(email, "kakao");
+        sessionUser.setAccess_token(access_token);
+        userService.setSession(request, sessionUser);
       } else{
         // 응답데이터가 없는 경우
         responseDTO.setResultMsg("카카오 통신 에러");
@@ -131,5 +134,17 @@ public class KakaoServiceImpl extends GenericServiceImpl implements KakaoService
     }
 
     return responseDTO;
+  }
+
+  @Override
+  public String getLogout(HttpServletRequest request){
+    ResponseDTO responseDTO = new ResponseDTO();
+    HttpSession session = request.getSession();
+
+    String url = environment.getProperty("kakao.logout.url"); // 로그아웃 요청 url
+    String client_id = environment.getProperty("kakao.rest.api"); // 카카오 rest api 키
+    String logout_redirect_uri = environment.getProperty("kakao.logout.logout_redirect_uri");
+
+    return url + "?client_id=" + client_id + "&logout_redirect_uri=" + logout_redirect_uri + "&state=raccoon";
   }
 }

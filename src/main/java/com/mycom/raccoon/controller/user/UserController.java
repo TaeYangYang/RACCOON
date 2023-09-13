@@ -3,6 +3,8 @@ package com.mycom.raccoon.controller.user;
 import com.mycom.raccoon.common.Util;
 import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.entity.User;
+import com.mycom.raccoon.service.kakao.KakaoService;
+import com.mycom.raccoon.service.naver.NaverService;
 import com.mycom.raccoon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.PropertySource;
@@ -10,9 +12,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -24,6 +28,10 @@ public class UserController {
   private final UserService userService;
 
   private final Environment environment;
+
+  private final KakaoService kakaoService;
+
+  private final NaverService naverService;
 
   /**
    * 로그인 리스트 화면
@@ -113,9 +121,19 @@ public class UserController {
    * 로그아웃
    */
   @GetMapping("logout")
-  public String logout(HttpServletRequest request, HttpServletResponse response, ModelMap model){
-    userService.getLogout(request);
-    return "/index";
+  public RedirectView logout(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    HttpSession session = request.getSession();
+
+    String redirect_url = "/index";
+    if(Util.nvl(session.getAttribute("signup_div")).equals("kakao")){
+      redirect_url = kakaoService.getLogout(request); // 카카오 로그아웃
+    } else if(Util.nvl(session.getAttribute("signup_div")).equals("naver")){
+      naverService.getLogout(request); // 네이버 로그아웃
+    } else{
+      userService.getLogout(request);
+    }
+
+    return new RedirectView(redirect_url);
   }
 
   /**

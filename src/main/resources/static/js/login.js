@@ -4,3 +4,7 @@
 function kakaoLogin(){
   location.href = '/kakao/login';
 }
+
+function naverLogin(){
+  location.href = '/naver/login';
+}
