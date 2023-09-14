@@ -1,17 +1,17 @@
 package com.mycom.raccoon.service.user.impl;
 
 import com.mycom.raccoon.entity.User;
-import com.mycom.raccoon.repository.GenericRepository;
-import com.mycom.raccoon.repository.UserRepository;
+import com.mycom.raccoon.repository.generic.GenericRepository;
+import com.mycom.raccoon.repository.user.UserRepository;
 import com.mycom.raccoon.service.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class) // Junit5 기능을 사용하고, Test에서 가짜 객체를 사용
@@ -45,7 +45,7 @@ class UserServiceImplTest {
     user.setPassword("");
 
     //Mockito.when(가짜 객체의 로직 실행). thenReturn(실행되면 이것을 반환한다.)
-    Mockito.when(userRepository.save(user)).thenReturn(user); // 가짜 객체 응답 정의
+    //Mockito.when(userRepository.save(user)).thenReturn(user); // 가짜 객체 응답 정의
 
     //when
     userService.insertUser(user);

@@ -1,0 +1,16 @@
+
+--코드
+
+CREATE TABLE CODE_TB(
+                        CODE VARCHAR2(100) PRIMARY KEY,
+                        CODE_NM VARCHAR2(1000),
+                        UP_CODE VARCHAR2(100)
+)
+;
+
+COMMENT ON TABLE CODE_TB IS '코드 테이블';
+COMMENT ON COLUMN CODE_TB.CODE IS '코드';
+COMMENT ON COLUMN CODE_TB.CODE_NM IS '코드명';
+COMMENT ON COLUMN CODE_TB.UP_CODE IS '상위코드';
+;
+

@@ -3,13 +3,13 @@ package com.mycom.raccoon.service.naver.impl;
 import com.mycom.raccoon.common.Util;
 import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.entity.User;
-import com.mycom.raccoon.repository.UserRepository;
-import com.mycom.raccoon.service.generic.impl.GenericServiceImpl;
+import com.mycom.raccoon.repository.user.UserRepository;
 import com.mycom.raccoon.service.naver.NaverService;
 import com.mycom.raccoon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
@@ -29,10 +29,11 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @PropertySource("classpath:/properties/key.properties")
-public class NaverServiceImpl extends GenericServiceImpl implements NaverService {
+public class NaverServiceImpl implements NaverService {
 
   private final Environment environment;
 
+  @Qualifier("userRepository")
   private final UserRepository userRepository;
 
   private final UserService userService;
@@ -120,7 +121,7 @@ public class NaverServiceImpl extends GenericServiceImpl implements NaverService
           insertUser.setUsername(name);
           insertUser.setSignupdiv("naver");
           insertUser.setNickname(nickname);
-          save(insertUser);
+          userRepository.save(insertUser);
         }
 
         User sessionUser = userRepository.findByUseridAndSignupdiv(id, "naver");

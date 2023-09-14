@@ -2,10 +2,10 @@ package com.mycom.raccoon.service.user.impl;
 
 import com.mycom.raccoon.entity.ResponseDTO;
 import com.mycom.raccoon.entity.User;
-import com.mycom.raccoon.repository.UserRepository;
-import com.mycom.raccoon.service.generic.impl.GenericServiceImpl;
+import com.mycom.raccoon.repository.user.UserRepository;
 import com.mycom.raccoon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +16,9 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl extends GenericServiceImpl<User> implements UserService{
+public class UserServiceImpl implements UserService{
 
+  @Qualifier("userRepository")
   private final UserRepository userRepository;
 
   private final PasswordEncoder passwordEncoder;
@@ -28,7 +29,7 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     to.setPassword(passwordEncoder.encode(to.getPassword()));
     to.setSignupdiv("raccoon"); // 시스템 내에서 회원가입
     try{
-      save(to);
+      userRepository.save(to);
     } catch(Exception e){
       e.printStackTrace();
     }

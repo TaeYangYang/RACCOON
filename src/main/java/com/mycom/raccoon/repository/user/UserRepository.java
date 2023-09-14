@@ -1,6 +1,7 @@
-package com.mycom.raccoon.repository;
+package com.mycom.raccoon.repository.user;
 
 import com.mycom.raccoon.entity.User;
+import com.mycom.raccoon.repository.generic.GenericRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

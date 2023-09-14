@@ -27,7 +27,12 @@
           </div>
         </li>
       </ul>
-    </section> 
+    </section>
+
+    <th:block th:if="${#strings.equals(param.saleCategory, 'sale')}">
+      <a href="./form">나도 판매하기</a>
+    </th:block>
+
     <section> <!--페이지 네비게이션 영역-->
       <nav>
         <ul>
