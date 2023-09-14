@@ -13,6 +13,28 @@
     function checkVal(){
 
     }
+
+    function getLowCode(obj){
+      let code = obj.value;
+      let objId = obj.id;
+      axios.get(`/common/lowlevelcode/` + code // 요청 urL, get방식
+          ,{withCredentials: false})
+          .then(res => { // promise 형식, 응답받음// res객체애 응답 데이터 담아옴
+            let html = '';
+            for(let i = 0 ; i < res.data.length ; i++){
+              let code = res.data[i].code;
+              let codeNm = res.data[i].codeNm;
+              html += '<option value="' + code + '">' + codeNm + '</option>';
+            }
+
+            let selectObj = document.querySelector('#div' + Number(objId.replace('div', '')) + 1);
+            $(selectObj).append(html);
+          })
+          .catch(err => { // 에러 처리
+            console.log(err);
+            alert('ERROR');
+          })
+    }
   </script>
 </head>
 <body>
@@ -36,14 +58,25 @@
                   <div class="object">
                     <p class="obTitle">분류</p>
                     <div class="form-outline flex-fill mb-0">
-                      <select th:field="" type="password" class="form-control"  maxlength="12"/>
+                      <select th:field="*{div1}" class="form-select" onchange="getLowCode(this);">
+                        <option value="" label="1차 분류"></option>
+                        <th:block th:each="code : ${codelist}">
+                          <option th:value="${code.code}" th:text="${code.codeNm}"></option>
+                        </th:block>
+                      </select>
+                      <select th:field="*{div2}" class="form-select" onchange="getLowCode(this);">
+                        <option value="" label="2차 분류"></option>
+                      </select>
+                      <select th:field="*{div3}" class="form-select">
+                        <option value="" label="3차 분류"></option>
+                      </select>
                     </div>
                   </div>
 
                   <div class="object">
                     <p class="obTitle">가격</p>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="password" class="form-control" maxlength="12"/>
+                      <input type="text" class="form-control" maxlength="12"/>
                     </div>
                   </div>
 

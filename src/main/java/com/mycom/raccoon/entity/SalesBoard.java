@@ -38,4 +38,10 @@ public class SalesBoard extends Common{
   private String saleCategoty; // 구매/판매여부
 
   private String celno; // 연락처
+
+  private String price; // 가격
+
+  private String div1; // 분류1
+  private String div2; // 분류2
+  private String div3; // 분류3
 }
