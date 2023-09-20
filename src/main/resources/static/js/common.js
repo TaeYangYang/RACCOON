@@ -26,3 +26,19 @@ function sendAuthCodeSMS(celno, callback){
   ]
 
 }
+
+/**
+ * 하위코드 얻어오기
+ * return List<CodeVO>
+ */
+function getLowCodeCommon(code, callback){
+  axios.get(`/common/lowlevelcode/` + code // 요청 urL, get방식
+      ,{withCredentials: false})
+      .then(res => { // promise 형식, 응답받음// res객체애 응답 데이터 담아옴
+        callback(res);
+      })
+      .catch(err => { // 에러 처리
+        console.log(err);
+        alert('ERROR');
+      })
+}

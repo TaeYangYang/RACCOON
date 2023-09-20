@@ -17,23 +17,25 @@
     function getLowCode(obj){
       let code = obj.value;
       let objId = obj.id;
-      axios.get(`/common/lowlevelcode/` + code // 요청 urL, get방식
-          ,{withCredentials: false})
-          .then(res => { // promise 형식, 응답받음// res객체애 응답 데이터 담아옴
-            let html = '';
-            for(let i = 0 ; i < res.data.length ; i++){
-              let code = res.data[i].code;
-              let codeNm = res.data[i].codeNm;
-              html += '<option value="' + code + '">' + codeNm + '</option>';
-            }
+      let nextLevel = Number(objId.replace('div', '')) + 1;
+      let html = '<option value="">' + nextLevel + '차 분류</option>';
+      let selectObj = document.querySelector('#div' + nextLevel);
 
-            let selectObj = document.querySelector('#div' + Number(objId.replace('div', '')) + 1);
-            $(selectObj).append(html);
-          })
-          .catch(err => { // 에러 처리
-            console.log(err);
-            alert('ERROR');
-          })
+      if(code == ''){
+        $(selectObj).html(html);
+      } else{
+        getLowCodeCommon(code, res => {
+
+          for(let i = 0 ; i < res.data.length ; i++){
+            let code = res.data[i].code;
+            let codeNm = res.data[i].codeNm;
+            html += '<option value="' + code + '">' + codeNm + '</option>';
+          }
+
+          let selectObj = document.querySelector('#div' + nextLevel);
+          $(selectObj).html(html);
+        });
+      }
     }
   </script>
 </head>
@@ -51,7 +53,7 @@
                   <div class="object">
                     <p class="obTitle">제목</p>
                     <div class="form-outline flex-fill mb-">
-                      <input type="text" th:field="*{title}" class="form-control-raccoon" placeholder="제목을 입력하세요." oninput="resetDupId();" maxlength="100"/>
+                      <input type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력하세요." oninput="resetDupId();" maxlength="100"/>
                     </div>
                   </div>
 
