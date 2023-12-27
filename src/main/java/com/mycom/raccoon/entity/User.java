@@ -14,19 +14,11 @@ import javax.persistence.*;
 @Table(name = "USER_TB")
 @NoArgsConstructor
 @DynamicUpdate
-@SequenceGenerator(
-        name = "USER_TB_SEQ_GENERATOR",
-        sequenceName = "USER_TB_SEQ",
-        initialValue = 1,
-        allocationSize = 1
-)
-
 public class User extends Common {
 
   @Id
   @GeneratedValue(
-          strategy = GenerationType.SEQUENCE,
-          generator = "USER_TB_SEQ_GENERATOR"
+          strategy = GenerationType.IDENTITY
   )  //시퀀스 생성기 선택
   private Integer id;
 

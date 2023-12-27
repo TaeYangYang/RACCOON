@@ -44,6 +44,8 @@ dependencies {
   implementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '21.1.0.0'
   //JPA
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  //MariaDB
+  implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.3.2'
 
   //SMS
   implementation 'net.nurigo:sdk:4.3.0'

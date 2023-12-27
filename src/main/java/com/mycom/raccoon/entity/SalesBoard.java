@@ -14,18 +14,11 @@ import javax.persistence.*;
 @Table(name = "SALESBOARD_TB")
 @NoArgsConstructor
 @DynamicUpdate
-@SequenceGenerator(
-        name = "SALESBOARD_TB_SEQ_GENERATOR",
-        sequenceName = "SALESBOARD_TB_SEQ",
-        initialValue = 1,
-        allocationSize = 1
-)
 public class SalesBoard extends Common{
 
   @Id
   @GeneratedValue(
-          strategy =GenerationType.SEQUENCE,
-          generator = "SALESBOARD_TB_SEQ_GENERATOR"
+          strategy = GenerationType.IDENTITY
   ) // 시퀀스
   private Integer id; // pk
 

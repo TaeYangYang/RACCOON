@@ -29,9 +29,9 @@ import java.util.Map;
 public class DataSourceConfig {
 
   @Primary
-  @Bean(name = "oracle_dataSource")
+  @Bean(name = "raccoon_dataSource")
   @ConfigurationProperties("spring.datasource")
-  public DataSource oracleDataSource() {
+  public DataSource raccoonDataSource() {
     return DataSourceBuilder.create().type(HikariDataSource.class).build();
   }
 
@@ -39,10 +39,10 @@ public class DataSourceConfig {
   @Bean(name = "baseEntityManager")
   public LocalContainerEntityManagerFactoryBean entityManagerFactory(
           EntityManagerFactoryBuilder builder,
-          @Qualifier("oracle_dataSource") DataSource dataSource) {
+          @Qualifier("raccoon_dataSource") DataSource dataSource) {
     Map<String, String> map = new HashMap<>();
     map.put("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
-    map.put("hibernate.dialect", "org.hibernate.dialect.OracleDialect");
+    map.put("hibernate.dialect", "org.hibernate.dialect.MariaDBDialect");
     return builder.dataSource(dataSource)
             .packages("com.mycom.raccoon.entity") // TODO Model 패키지 지정
             .properties(map)
