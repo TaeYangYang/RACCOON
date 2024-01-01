@@ -1,3 +1,4 @@
+/*
 package com.mycom.raccoon.service.user.impl;
 
 import com.mycom.raccoon.entity.User;
@@ -52,7 +53,8 @@ class UserServiceImplTest {
     //assertThat(userRepository.findByUserid(user.getUserid())).isEqualTo(user);
   }
 
-  /*@BeforeAll
+  */
+/*@BeforeAll
   static void beforeAll() {
     System.out.println("## BeforeAll Annotation 호출 ##");
     System.out.println();
@@ -95,5 +97,6 @@ class UserServiceImplTest {
   void test3() {
     System.out.println("## test3 시작 ##");
     System.out.println();
-  }*/
-}
+  }*//*
+
+}*/

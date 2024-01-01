@@ -5,4 +5,4 @@
 -- MariaDB
 CREATE DATABASE RACCOON;
 CREATE USER 'RACCOON_USER'@'%' IDENTIFIED BY 'RACCOON123';
-grant all on *.* to 'RACCOON'@'localhost' identified by 'RACCOON123';
+grant all on *.* to 'RACCOON_USER'@'localhost' identified by 'RACCOON123';

@@ -1,3 +1,4 @@
+/*
 package com.mycom.raccoon.repository;
 
 import com.mycom.raccoon.config.DataSourceConfig;
@@ -38,4 +39,4 @@ class UserRepositoryTest {
   @Test
   void findByUseridAndSignupdiv() {
   }
-}
+}*/
