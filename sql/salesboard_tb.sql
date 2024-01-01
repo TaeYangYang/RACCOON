@@ -8,17 +8,17 @@ NOCYCLE;
 
 -- 게시글
 CREATE TABLE SALESBOARD_TB(
-                              ID NUMBER NOT NULL PRIMARY KEY,
-                              TITLE VARCHAR2(300),
-                              CONTENT CLOB,
-                              SALE_CATEGORY VARCHAR2(30),
-                              CELNO VARCHAR2(15),
-                              INPT_DTTM DATE,
-                              INPT_USER VARCHAR2(30),
-                              UPDT_DTTM DATE,
-                              UPDT_USER VARCHAR2(30),
+  ID NUMBER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  TITLE VARCHAR2(300),
+  CONTENT CLOB,
+  SALE_CATEGORY VARCHAR2(30),
+  CELNO VARCHAR2(15),
+  INPT_DTTM DATE,
+  INPT_USER VARCHAR2(30),
+  UPDT_DTTM DATE,
+  UPDT_USER VARCHAR2(30),
 
-                              CONSTRAINT SALESBOARD_TB_FK_USERID FOREIGN KEY(INPT_USER) REFERENCES USER_TB(USER_ID)
+  CONSTRAINT SALESBOARD_TB_FK_USERID FOREIGN KEY(INPT_USER) REFERENCES USER_TB(USER_ID)
 )
 ;
 
